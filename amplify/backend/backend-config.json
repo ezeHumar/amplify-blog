@@ -18,7 +18,7 @@
     }
   },
   "auth": {
-    "amplifyblog91bc9bda": {
+    "amplifyblog1a09f930": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],

@@ -10,4 +10,12 @@
   <h1 *ngFor="let blog of blogs"> {{ blog.name }}</h1>
 </div>
 
+<amplify-authenticator>
+  <div>
+    Blogs
+    <amplify-sign-out></amplify-sign-out>
+  </div>
+  <!-- previous code -->
+</amplify-authenticator>
+
 <router-outlet></router-outlet>
