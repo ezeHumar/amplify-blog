@@ -1,6 +1,4 @@
 {
-    "identityPoolName": "amplifyblog1a09f930_identitypool_1a09f930",
-    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "amplif1a09f930",
     "userPoolName": "amplifyblog1a09f930_userpool_1a09f930",
     "autoVerifiedAttributes": [
@@ -15,7 +13,7 @@
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": 8,
+    "passwordPolicyMinLength": "6",
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
         "email"
@@ -32,7 +30,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "1a09f930",
     "resourceName": "amplifyblog1a09f930",
-    "authSelections": "identityPoolAndUserPool",
+    "authSelections": "userPoolOnly",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -45,17 +43,24 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
         "email"
     ],
     "triggers": "{}",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "amplifyblog"
+    ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
     "parentStack": {
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "userPoolGroups": false,
+    "adminQueries": true,
+    "hostedUI": false,
+    "adminQueryGroup": "Admin",
+    "authProviders": []
 }

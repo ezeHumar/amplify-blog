@@ -1,20 +1,59 @@
-type Blog @model {
-  id: ID!
-  name: String!
-  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
-}
-
-type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+type Post @model
+  @auth(rules: [
+    { allow: owner },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] },
+    { allow: groups, groups: ["Admin"], operations: [delete] }
+  ]
+  ) {
   id: ID!
   title: String!
-  blogID: ID!
-  blog: Blog @connection(fields: ["blogID"])
-  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  content: String!
+  comments: [Comment] @connection(keyName: "commentPost", fields: ["id"])
+  tags: [TagPost] @connection(keyName: "tagPost", fields: ["id"])
 }
 
-type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+type Comment @model 
+  @key(name: "commentPost", fields: ["postID", "content"])
+  @auth(rules: [
+    { allow: owner },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] },
+    { allow: groups, groups: ["Admin"], operations: [delete] }
+  ]
+  ) {
   id: ID!
   postID: ID!
-  post: Post @connection(fields: ["postID"])
   content: String!
+  post: Post @connection(fields: ["postID"])
+  
 }
+
+type Tag @model
+  @auth(rules: [
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] },
+    { allow: groups, groups: ["Admin"] }
+  ]
+  ) {
+  id: ID!
+  tag: String!
+  posts: [TagPost] @connection(keyName: "postTag", fields: ["id"])
+}
+
+type TagPost @model
+  @key(name: "tagPost", fields: ["postID", "tagID"])
+  @key(name: "postTag", fields: ["tagID", "postID"])
+  @auth(rules: [
+    { allow: owner },
+    { allow: public, operations: [read] },
+    { allow: private, operations: [read] },
+    { allow: groups, groups: ["Admin"], operations: [delete] }
+  ]
+  ) {
+    id: ID!
+    postID: ID!
+    tagID: ID!
+    post: Post! @connection(fields: ["postID"])
+    tag: Tag! @connection(fields: ["tagID"])
+  }

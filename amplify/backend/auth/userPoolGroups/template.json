@@ -1,0 +1,55 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "authamplifyblog1a09f930UserPoolId": {
+            "Type": "String",
+            "Default": "authamplifyblog1a09f930UserPoolId"
+        },
+        
+        "authamplifyblog1a09f930AppClientID": {
+            "Type": "String",
+            "Default": "authamplifyblog1a09f930AppClientID"
+        },
+        "authamplifyblog1a09f930AppClientIDWeb": {
+            "Type": "String",
+            "Default": "authamplifyblog1a09f930AppClientIDWeb"
+        },
+        "AuthRoleArn": {
+            "Type": "String"
+        },
+        "UnauthRoleArn": {
+            "Type": "String"
+        },
+        "env": {
+            "Type": "String"
+        }
+    },
+    "Conditions": {
+        "ShouldNotCreateEnvResources": {
+            "Fn::Equals": [
+                {
+                    "Ref": "env"
+                },
+                "NONE"
+            ]
+        }
+    },
+    "Resources": {
+    
+        "amplifyblogGroup": {
+          "Type" : "AWS::Cognito::UserPoolGroup",
+          "Properties" : {
+              "GroupName" : "amplifyblog",
+              "Precedence" : 1,
+              
+              "UserPoolId" : {
+                "Ref": "authamplifyblog1a09f930UserPoolId"
+              }
+            }
+        },
+        
+    
+    
+    },
+    
+}

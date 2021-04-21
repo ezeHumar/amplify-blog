@@ -9,16 +9,18 @@ export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
 }
 
-export type CreateBlogInput = {
+export type CreatePostInput = {
   id?: string | null;
-  name: string;
+  title: string;
+  content: string;
 };
 
-export type ModelBlogConditionInput = {
-  name?: ModelStringInput | null;
-  and?: Array<ModelBlogConditionInput | null> | null;
-  or?: Array<ModelBlogConditionInput | null> | null;
-  not?: ModelBlogConditionInput | null;
+export type ModelPostConditionInput = {
+  title?: ModelStringInput | null;
+  content?: ModelStringInput | null;
+  and?: Array<ModelPostConditionInput | null> | null;
+  or?: Array<ModelPostConditionInput | null> | null;
+  not?: ModelPostConditionInput | null;
 };
 
 export type ModelStringInput = {
@@ -60,30 +62,16 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
-export type Blog = {
-  __typename: "Blog";
-  id?: string;
-  name?: string;
-  posts?: ModelPostConnection;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection";
-  items?: Array<Post | null> | null;
-  nextToken?: string | null;
-};
-
 export type Post = {
   __typename: "Post";
   id?: string;
   title?: string;
-  blogID?: string;
-  blog?: Blog;
-  comments?: ModelCommentConnection;
+  content?: string;
   createdAt?: string;
   updatedAt?: string;
+  owner?: string | null;
+  comments?: ModelCommentConnection;
+  tags?: ModelTagPostConnection;
 };
 
 export type ModelCommentConnection = {
@@ -96,55 +84,44 @@ export type Comment = {
   __typename: "Comment";
   id?: string;
   postID?: string;
-  post?: Post;
   content?: string;
   createdAt?: string;
   updatedAt?: string;
+  post?: Post;
+  owner?: string | null;
 };
 
-export type UpdateBlogInput = {
-  id: string;
-  name?: string | null;
+export type ModelTagPostConnection = {
+  __typename: "ModelTagPostConnection";
+  items?: Array<TagPost | null> | null;
+  nextToken?: string | null;
 };
 
-export type DeleteBlogInput = {
-  id?: string | null;
+export type TagPost = {
+  __typename: "TagPost";
+  id?: string;
+  postID?: string;
+  tagID?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  post?: Post;
+  tag?: Tag;
+  owner?: string | null;
 };
 
-export type CreatePostInput = {
-  id?: string | null;
-  title: string;
-  blogID: string;
-};
-
-export type ModelPostConditionInput = {
-  title?: ModelStringInput | null;
-  blogID?: ModelIDInput | null;
-  and?: Array<ModelPostConditionInput | null> | null;
-  or?: Array<ModelPostConditionInput | null> | null;
-  not?: ModelPostConditionInput | null;
-};
-
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
+export type Tag = {
+  __typename: "Tag";
+  id?: string;
+  tag?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  posts?: ModelTagPostConnection;
 };
 
 export type UpdatePostInput = {
   id: string;
   title?: string | null;
-  blogID?: string | null;
+  content?: string | null;
 };
 
 export type DeletePostInput = {
@@ -165,6 +142,22 @@ export type ModelCommentConditionInput = {
   not?: ModelCommentConditionInput | null;
 };
 
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
+};
+
 export type UpdateCommentInput = {
   id: string;
   postID?: string | null;
@@ -175,27 +168,64 @@ export type DeleteCommentInput = {
   id?: string | null;
 };
 
-export type ModelBlogFilterInput = {
-  id?: ModelIDInput | null;
-  name?: ModelStringInput | null;
-  and?: Array<ModelBlogFilterInput | null> | null;
-  or?: Array<ModelBlogFilterInput | null> | null;
-  not?: ModelBlogFilterInput | null;
+export type CreateTagInput = {
+  id?: string | null;
+  tag: string;
 };
 
-export type ModelBlogConnection = {
-  __typename: "ModelBlogConnection";
-  items?: Array<Blog | null> | null;
-  nextToken?: string | null;
+export type ModelTagConditionInput = {
+  tag?: ModelStringInput | null;
+  and?: Array<ModelTagConditionInput | null> | null;
+  or?: Array<ModelTagConditionInput | null> | null;
+  not?: ModelTagConditionInput | null;
+};
+
+export type UpdateTagInput = {
+  id: string;
+  tag?: string | null;
+};
+
+export type DeleteTagInput = {
+  id?: string | null;
+};
+
+export type CreateTagPostInput = {
+  id?: string | null;
+  postID: string;
+  tagID: string;
+};
+
+export type ModelTagPostConditionInput = {
+  postID?: ModelIDInput | null;
+  tagID?: ModelIDInput | null;
+  and?: Array<ModelTagPostConditionInput | null> | null;
+  or?: Array<ModelTagPostConditionInput | null> | null;
+  not?: ModelTagPostConditionInput | null;
+};
+
+export type UpdateTagPostInput = {
+  id: string;
+  postID?: string | null;
+  tagID?: string | null;
+};
+
+export type DeleteTagPostInput = {
+  id?: string | null;
 };
 
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
-  blogID?: ModelIDInput | null;
+  content?: ModelStringInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
   or?: Array<ModelPostFilterInput | null> | null;
   not?: ModelPostFilterInput | null;
+};
+
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection";
+  items?: Array<Post | null> | null;
+  nextToken?: string | null;
 };
 
 export type ModelCommentFilterInput = {
@@ -207,82 +237,37 @@ export type ModelCommentFilterInput = {
   not?: ModelCommentFilterInput | null;
 };
 
-export type CreateBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
+export type ModelTagFilterInput = {
+  id?: ModelIDInput | null;
+  tag?: ModelStringInput | null;
+  and?: Array<ModelTagFilterInput | null> | null;
+  or?: Array<ModelTagFilterInput | null> | null;
+  not?: ModelTagFilterInput | null;
 };
 
-export type UpdateBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
+export type ModelTagConnection = {
+  __typename: "ModelTagConnection";
+  items?: Array<Tag | null> | null;
+  nextToken?: string | null;
 };
 
-export type DeleteBlogMutation = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
+export type ModelTagPostFilterInput = {
+  id?: ModelIDInput | null;
+  postID?: ModelIDInput | null;
+  tagID?: ModelIDInput | null;
+  and?: Array<ModelTagPostFilterInput | null> | null;
+  or?: Array<ModelTagPostFilterInput | null> | null;
+  not?: ModelTagPostFilterInput | null;
 };
 
 export type CreatePostMutation = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -292,29 +277,33 @@ export type CreatePostMutation = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type UpdatePostMutation = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -324,29 +313,33 @@ export type UpdatePostMutation = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type DeletePostMutation = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -356,163 +349,281 @@ export type DeletePostMutation = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type CreateCommentMutation = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
 export type UpdateCommentMutation = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
 export type DeleteCommentMutation = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
-export type GetBlogQuery = {
-  __typename: "Blog";
+export type CreateTagMutation = {
+  __typename: "Tag";
   id: string;
-  name: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
   posts?: {
-    __typename: "ModelPostConnection";
+    __typename: "ModelTagPostConnection";
     items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-};
-
-export type ListBlogsQuery = {
-  __typename: "ModelBlogConnection";
-  items?: Array<{
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null> | null;
-  nextToken?: string | null;
-};
-
-export type GetPostQuery = {
-  __typename: "Post";
-  id: string;
-  title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
-  comments?: {
-    __typename: "ModelCommentConnection";
-    items?: Array<{
-      __typename: "Comment";
+      __typename: "TagPost";
       id: string;
       postID: string;
-      content: string;
+      tagID: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
+};
+
+export type UpdateTagMutation = {
+  __typename: "Tag";
+  id: string;
+  tag: string;
   createdAt: string;
   updatedAt: string;
+  posts?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type DeleteTagMutation = {
+  __typename: "Tag";
+  id: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
+  posts?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type CreateTagPostMutation = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
+};
+
+export type UpdateTagPostMutation = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
+};
+
+export type DeleteTagPostMutation = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
 };
 
 export type ListPostsQuery = {
@@ -521,50 +632,83 @@ export type ListPostsQuery = {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null> | null;
   nextToken?: string | null;
+};
+
+export type GetPostQuery = {
+  __typename: "Post";
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type GetCommentQuery = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
 export type ListCommentsQuery = {
@@ -573,97 +717,136 @@ export type ListCommentsQuery = {
     __typename: "Comment";
     id: string;
     postID: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
     post?: {
       __typename: "Post";
       id: string;
       title: string;
-      blogID: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
+    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
 
-export type OnCreateBlogSubscription = {
-  __typename: "Blog";
-  id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
-      __typename: "Post";
-      id: string;
-      title: string;
-      blogID: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
+export type ListTagsQuery = {
+  __typename: "ModelTagConnection";
+  items?: Array<{
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null> | null;
+  nextToken?: string | null;
 };
 
-export type OnUpdateBlogSubscription = {
-  __typename: "Blog";
+export type GetTagQuery = {
+  __typename: "Tag";
   id: string;
-  name: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
   posts?: {
-    __typename: "ModelPostConnection";
+    __typename: "ModelTagPostConnection";
     items?: Array<{
-      __typename: "Post";
+      __typename: "TagPost";
       id: string;
-      title: string;
-      blogID: string;
+      postID: string;
+      tagID: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
 };
 
-export type OnDeleteBlogSubscription = {
-  __typename: "Blog";
+export type GetTagPostQuery = {
+  __typename: "TagPost";
   id: string;
-  name: string;
-  posts?: {
-    __typename: "ModelPostConnection";
-    items?: Array<{
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
+};
+
+export type ListTagPostsQuery = {
+  __typename: "ModelTagPostConnection";
+  items?: Array<{
+    __typename: "TagPost";
+    id: string;
+    postID: string;
+    tagID: string;
+    createdAt: string;
+    updatedAt: string;
+    post: {
       __typename: "Post";
       id: string;
       title: string;
-      blogID: string;
+      content: string;
       createdAt: string;
       updatedAt: string;
-    } | null> | null;
-    nextToken?: string | null;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
+      owner?: string | null;
+    };
+    tag: {
+      __typename: "Tag";
+      id: string;
+      tag: string;
+      createdAt: string;
+      updatedAt: string;
+    };
+    owner?: string | null;
+  } | null> | null;
+  nextToken?: string | null;
 };
 
 export type OnCreatePostSubscription = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -673,29 +856,33 @@ export type OnCreatePostSubscription = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnUpdatePostSubscription = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -705,29 +892,33 @@ export type OnUpdatePostSubscription = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnDeletePostSubscription = {
   __typename: "Post";
   id: string;
   title: string;
-  blogID: string;
-  blog?: {
-    __typename: "Blog";
-    id: string;
-    name: string;
-    posts?: {
-      __typename: "ModelPostConnection";
-      nextToken?: string | null;
-    } | null;
-    createdAt: string;
-    updatedAt: string;
-  } | null;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -737,209 +928,287 @@ export type OnDeletePostSubscription = {
       content: string;
       createdAt: string;
       updatedAt: string;
+      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
-  createdAt: string;
-  updatedAt: string;
+  tags?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnCreateCommentSubscription = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnUpdateCommentSubscription = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
+  owner?: string | null;
 };
 
 export type OnDeleteCommentSubscription = {
   __typename: "Comment";
   id: string;
   postID: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
-    blogID: string;
-    blog?: {
-      __typename: "Blog";
-      id: string;
-      name: string;
-      createdAt: string;
-      updatedAt: string;
-    } | null;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
     } | null;
-    createdAt: string;
-    updatedAt: string;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
   } | null;
-  content: string;
+  owner?: string | null;
+};
+
+export type OnCreateTagSubscription = {
+  __typename: "Tag";
+  id: string;
+  tag: string;
   createdAt: string;
   updatedAt: string;
+  posts?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type OnUpdateTagSubscription = {
+  __typename: "Tag";
+  id: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
+  posts?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type OnDeleteTagSubscription = {
+  __typename: "Tag";
+  id: string;
+  tag: string;
+  createdAt: string;
+  updatedAt: string;
+  posts?: {
+    __typename: "ModelTagPostConnection";
+    items?: Array<{
+      __typename: "TagPost";
+      id: string;
+      postID: string;
+      tagID: string;
+      createdAt: string;
+      updatedAt: string;
+      owner?: string | null;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+};
+
+export type OnCreateTagPostSubscription = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
+};
+
+export type OnUpdateTagPostSubscription = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
+};
+
+export type OnDeleteTagPostSubscription = {
+  __typename: "TagPost";
+  id: string;
+  postID: string;
+  tagID: string;
+  createdAt: string;
+  updatedAt: string;
+  post: {
+    __typename: "Post";
+    id: string;
+    title: string;
+    content: string;
+    createdAt: string;
+    updatedAt: string;
+    owner?: string | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+    tags?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  tag: {
+    __typename: "Tag";
+    id: string;
+    tag: string;
+    createdAt: string;
+    updatedAt: string;
+    posts?: {
+      __typename: "ModelTagPostConnection";
+      nextToken?: string | null;
+    } | null;
+  };
+  owner?: string | null;
 };
 
 @Injectable({
   providedIn: "root"
 })
 export class APIService {
-  async CreateBlog(
-    input: CreateBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<CreateBlogMutation> {
-    const statement = `mutation CreateBlog($input: CreateBlogInput!, $condition: ModelBlogConditionInput) {
-        createBlog(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <CreateBlogMutation>response.data.createBlog;
-  }
-  async UpdateBlog(
-    input: UpdateBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<UpdateBlogMutation> {
-    const statement = `mutation UpdateBlog($input: UpdateBlogInput!, $condition: ModelBlogConditionInput) {
-        updateBlog(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <UpdateBlogMutation>response.data.updateBlog;
-  }
-  async DeleteBlog(
-    input: DeleteBlogInput,
-    condition?: ModelBlogConditionInput
-  ): Promise<DeleteBlogMutation> {
-    const statement = `mutation DeleteBlog($input: DeleteBlogInput!, $condition: ModelBlogConditionInput) {
-        deleteBlog(input: $input, condition: $condition) {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
-              __typename
-              id
-              title
-              blogID
-              createdAt
-              updatedAt
-            }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {
-      input
-    };
-    if (condition) {
-      gqlAPIServiceArguments.condition = condition;
-    }
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <DeleteBlogMutation>response.data.deleteBlog;
-  }
   async CreatePost(
     input: CreatePostInput,
     condition?: ModelPostConditionInput
@@ -949,18 +1218,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -970,11 +1231,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -997,18 +1270,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -1018,11 +1283,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1045,18 +1322,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -1066,11 +1335,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1093,28 +1374,27 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1137,28 +1417,27 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1181,28 +1460,27 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1216,114 +1494,278 @@ export class APIService {
     )) as any;
     return <DeleteCommentMutation>response.data.deleteComment;
   }
-  async GetBlog(id: string): Promise<GetBlogQuery> {
-    const statement = `query GetBlog($id: ID!) {
-        getBlog(id: $id) {
+  async CreateTag(
+    input: CreateTagInput,
+    condition?: ModelTagConditionInput
+  ): Promise<CreateTagMutation> {
+    const statement = `mutation CreateTag($input: CreateTagInput!, $condition: ModelTagConditionInput) {
+        createTag(input: $input, condition: $condition) {
           __typename
           id
-          name
+          tag
+          createdAt
+          updatedAt
           posts {
             __typename
             items {
               __typename
               id
-              title
-              blogID
+              postID
+              tagID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      input
     };
-    const response = (await API.graphql(
-      graphqlOperation(statement, gqlAPIServiceArguments)
-    )) as any;
-    return <GetBlogQuery>response.data.getBlog;
-  }
-  async ListBlogs(
-    filter?: ModelBlogFilterInput,
-    limit?: number,
-    nextToken?: string
-  ): Promise<ListBlogsQuery> {
-    const statement = `query ListBlogs($filter: ModelBlogFilterInput, $limit: Int, $nextToken: String) {
-        listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-          __typename
-          items {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-      }`;
-    const gqlAPIServiceArguments: any = {};
-    if (filter) {
-      gqlAPIServiceArguments.filter = filter;
-    }
-    if (limit) {
-      gqlAPIServiceArguments.limit = limit;
-    }
-    if (nextToken) {
-      gqlAPIServiceArguments.nextToken = nextToken;
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
     }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <ListBlogsQuery>response.data.listBlogs;
+    return <CreateTagMutation>response.data.createTag;
   }
-  async GetPost(id: string): Promise<GetPostQuery> {
-    const statement = `query GetPost($id: ID!) {
-        getPost(id: $id) {
+  async UpdateTag(
+    input: UpdateTagInput,
+    condition?: ModelTagConditionInput
+  ): Promise<UpdateTagMutation> {
+    const statement = `mutation UpdateTag($input: UpdateTagInput!, $condition: ModelTagConditionInput) {
+        updateTag(input: $input, condition: $condition) {
           __typename
           id
-          title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
-          comments {
+          tag
+          createdAt
+          updatedAt
+          posts {
             __typename
             items {
               __typename
               id
               postID
-              content
+              tagID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
         }
       }`;
     const gqlAPIServiceArguments: any = {
-      id
+      input
     };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
     const response = (await API.graphql(
       graphqlOperation(statement, gqlAPIServiceArguments)
     )) as any;
-    return <GetPostQuery>response.data.getPost;
+    return <UpdateTagMutation>response.data.updateTag;
+  }
+  async DeleteTag(
+    input: DeleteTagInput,
+    condition?: ModelTagConditionInput
+  ): Promise<DeleteTagMutation> {
+    const statement = `mutation DeleteTag($input: DeleteTagInput!, $condition: ModelTagConditionInput) {
+        deleteTag(input: $input, condition: $condition) {
+          __typename
+          id
+          tag
+          createdAt
+          updatedAt
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTagMutation>response.data.deleteTag;
+  }
+  async CreateTagPost(
+    input: CreateTagPostInput,
+    condition?: ModelTagPostConditionInput
+  ): Promise<CreateTagPostMutation> {
+    const statement = `mutation CreateTagPost($input: CreateTagPostInput!, $condition: ModelTagPostConditionInput) {
+        createTagPost(input: $input, condition: $condition) {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateTagPostMutation>response.data.createTagPost;
+  }
+  async UpdateTagPost(
+    input: UpdateTagPostInput,
+    condition?: ModelTagPostConditionInput
+  ): Promise<UpdateTagPostMutation> {
+    const statement = `mutation UpdateTagPost($input: UpdateTagPostInput!, $condition: ModelTagPostConditionInput) {
+        updateTagPost(input: $input, condition: $condition) {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateTagPostMutation>response.data.updateTagPost;
+  }
+  async DeleteTagPost(
+    input: DeleteTagPostInput,
+    condition?: ModelTagPostConditionInput
+  ): Promise<DeleteTagPostMutation> {
+    const statement = `mutation DeleteTagPost($input: DeleteTagPostInput!, $condition: ModelTagPostConditionInput) {
+        deleteTagPost(input: $input, condition: $condition) {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteTagPostMutation>response.data.deleteTagPost;
   }
   async ListPosts(
     filter?: ModelPostFilterInput,
@@ -1337,20 +1779,18 @@ export class APIService {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
           nextToken
         }
@@ -1370,34 +1810,79 @@ export class APIService {
     )) as any;
     return <ListPostsQuery>response.data.listPosts;
   }
+  async GetPost(id: string): Promise<GetPostQuery> {
+    const statement = `query GetPost($id: ID!) {
+        getPost(id: $id) {
+          __typename
+          id
+          title
+          content
+          createdAt
+          updatedAt
+          owner
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetPostQuery>response.data.getPost;
+  }
   async GetComment(id: string): Promise<GetCommentQuery> {
     const statement = `query GetComment($id: ID!) {
         getComment(id: $id) {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1420,17 +1905,19 @@ export class APIService {
             __typename
             id
             postID
+            content
+            createdAt
+            updatedAt
             post {
               __typename
               id
               title
-              blogID
+              content
               createdAt
               updatedAt
+              owner
             }
-            content
-            createdAt
-            updatedAt
+            owner
           }
           nextToken
         }
@@ -1450,90 +1937,173 @@ export class APIService {
     )) as any;
     return <ListCommentsQuery>response.data.listComments;
   }
-  OnCreateBlogListener: Observable<
-    SubscriptionResponse<OnCreateBlogSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnCreateBlog {
-        onCreateBlog {
+  async ListTags(
+    filter?: ModelTagFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTagsQuery> {
+    const statement = `query ListTags($filter: ModelTagFilterInput, $limit: Int, $nextToken: String) {
+        listTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListTagsQuery>response.data.listTags;
+  }
+  async GetTag(id: string): Promise<GetTagQuery> {
+    const statement = `query GetTag($id: ID!) {
+        getTag(id: $id) {
           __typename
           id
-          name
+          tag
+          createdAt
+          updatedAt
           posts {
             __typename
             items {
               __typename
               id
-              title
-              blogID
+              postID
+              tagID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnCreateBlogSubscription>>;
-
-  OnUpdateBlogListener: Observable<
-    SubscriptionResponse<OnUpdateBlogSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnUpdateBlog {
-        onUpdateBlog {
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTagQuery>response.data.getTag;
+  }
+  async GetTagPost(id: string): Promise<GetTagPostQuery> {
+    const statement = `query GetTagPost($id: ID!) {
+        getTagPost(id: $id) {
           __typename
           id
-          name
-          posts {
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
             __typename
-            items {
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetTagPostQuery>response.data.getTagPost;
+  }
+  async ListTagPosts(
+    filter?: ModelTagPostFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListTagPostsQuery> {
+    const statement = `query ListTagPosts($filter: ModelTagPostFilterInput, $limit: Int, $nextToken: String) {
+        listTagPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            postID
+            tagID
+            createdAt
+            updatedAt
+            post {
               __typename
               id
               title
-              blogID
+              content
               createdAt
               updatedAt
+              owner
             }
-            nextToken
-          }
-          createdAt
-          updatedAt
-        }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnUpdateBlogSubscription>>;
-
-  OnDeleteBlogListener: Observable<
-    SubscriptionResponse<OnDeleteBlogSubscription>
-  > = API.graphql(
-    graphqlOperation(
-      `subscription OnDeleteBlog {
-        onDeleteBlog {
-          __typename
-          id
-          name
-          posts {
-            __typename
-            items {
+            tag {
               __typename
               id
-              title
-              blogID
+              tag
               createdAt
               updatedAt
             }
-            nextToken
+            owner
           }
-          createdAt
-          updatedAt
+          nextToken
         }
-      }`
-    )
-  ) as Observable<SubscriptionResponse<OnDeleteBlogSubscription>>;
-
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListTagPostsQuery>response.data.listTagPosts;
+  }
   OnCreatePostListener: Observable<
     SubscriptionResponse<OnCreatePostSubscription>
   > = API.graphql(
@@ -1543,18 +2113,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -1564,11 +2126,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -1583,18 +2157,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -1604,11 +2170,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -1623,18 +2201,10 @@ export class APIService {
           __typename
           id
           title
-          blogID
-          blog {
-            __typename
-            id
-            name
-            posts {
-              __typename
-              nextToken
-            }
-            createdAt
-            updatedAt
-          }
+          content
+          createdAt
+          updatedAt
+          owner
           comments {
             __typename
             items {
@@ -1644,11 +2214,23 @@ export class APIService {
               content
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
-          createdAt
-          updatedAt
+          tags {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -1663,28 +2245,27 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`
     )
@@ -1699,28 +2280,27 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`
     )
@@ -1735,30 +2315,254 @@ export class APIService {
           __typename
           id
           postID
+          content
+          createdAt
+          updatedAt
           post {
             __typename
             id
             title
-            blogID
-            blog {
-              __typename
-              id
-              name
-              createdAt
-              updatedAt
-            }
+            content
+            createdAt
+            updatedAt
+            owner
             comments {
               __typename
               nextToken
             }
-            createdAt
-            updatedAt
+            tags {
+              __typename
+              nextToken
+            }
           }
-          content
-          createdAt
-          updatedAt
+          owner
         }
       }`
     )
   ) as Observable<SubscriptionResponse<OnDeleteCommentSubscription>>;
+
+  OnCreateTagListener: Observable<
+    SubscriptionResponse<OnCreateTagSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTag {
+        onCreateTag {
+          __typename
+          id
+          tag
+          createdAt
+          updatedAt
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateTagSubscription>>;
+
+  OnUpdateTagListener: Observable<
+    SubscriptionResponse<OnUpdateTagSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTag {
+        onUpdateTag {
+          __typename
+          id
+          tag
+          createdAt
+          updatedAt
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateTagSubscription>>;
+
+  OnDeleteTagListener: Observable<
+    SubscriptionResponse<OnDeleteTagSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTag {
+        onDeleteTag {
+          __typename
+          id
+          tag
+          createdAt
+          updatedAt
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              tagID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteTagSubscription>>;
+
+  OnCreateTagPostListener: Observable<
+    SubscriptionResponse<OnCreateTagPostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateTagPost {
+        onCreateTagPost {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateTagPostSubscription>>;
+
+  OnUpdateTagPostListener: Observable<
+    SubscriptionResponse<OnUpdateTagPostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateTagPost {
+        onUpdateTagPost {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateTagPostSubscription>>;
+
+  OnDeleteTagPostListener: Observable<
+    SubscriptionResponse<OnDeleteTagPostSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteTagPost {
+        onDeleteTagPost {
+          __typename
+          id
+          postID
+          tagID
+          createdAt
+          updatedAt
+          post {
+            __typename
+            id
+            title
+            content
+            createdAt
+            updatedAt
+            owner
+            comments {
+              __typename
+              nextToken
+            }
+            tags {
+              __typename
+              nextToken
+            }
+          }
+          tag {
+            __typename
+            id
+            tag
+            createdAt
+            updatedAt
+            posts {
+              __typename
+              nextToken
+            }
+          }
+          owner
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteTagPostSubscription>>;
 }

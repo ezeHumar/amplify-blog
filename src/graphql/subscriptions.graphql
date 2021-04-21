@@ -1,72 +1,12 @@
 # this is an auto generated file. This will be overwritten
-subscription OnCreateBlog {
-  onCreateBlog {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnUpdateBlog {
-  onUpdateBlog {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-subscription OnDeleteBlog {
-  onDeleteBlog {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
 subscription OnCreatePost {
   onCreatePost {
     id
     title
-    blogID
-    blog {
-      id
-      name
-      posts {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
+    content
+    createdAt
+    updatedAt
+    owner
     comments {
       items {
         id
@@ -74,27 +14,31 @@ subscription OnCreatePost {
         content
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
+    tags {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 subscription OnUpdatePost {
   onUpdatePost {
     id
     title
-    blogID
-    blog {
-      id
-      name
-      posts {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
+    content
+    createdAt
+    updatedAt
+    owner
     comments {
       items {
         id
@@ -102,27 +46,31 @@ subscription OnUpdatePost {
         content
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
+    tags {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 subscription OnDeletePost {
   onDeletePost {
     id
     title
-    blogID
-    blog {
-      id
-      name
-      posts {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
+    content
+    createdAt
+    updatedAt
+    owner
     comments {
       items {
         id
@@ -130,85 +78,248 @@ subscription OnDeletePost {
         content
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
-    createdAt
-    updatedAt
+    tags {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 subscription OnCreateComment {
   onCreateComment {
     id
     postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
     content
     createdAt
     updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    owner
   }
 }
 subscription OnUpdateComment {
   onUpdateComment {
     id
     postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
     content
     createdAt
     updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    owner
   }
 }
 subscription OnDeleteComment {
   onDeleteComment {
     id
     postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
     content
     createdAt
     updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    owner
+  }
+}
+subscription OnCreateTag {
+  onCreateTag {
+    id
+    tag
+    createdAt
+    updatedAt
+    posts {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateTag {
+  onUpdateTag {
+    id
+    tag
+    createdAt
+    updatedAt
+    posts {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteTag {
+  onDeleteTag {
+    id
+    tag
+    createdAt
+    updatedAt
+    posts {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateTagPost {
+  onCreateTagPost {
+    id
+    postID
+    tagID
+    createdAt
+    updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    tag {
+      id
+      tag
+      createdAt
+      updatedAt
+      posts {
+        nextToken
+      }
+    }
+    owner
+  }
+}
+subscription OnUpdateTagPost {
+  onUpdateTagPost {
+    id
+    postID
+    tagID
+    createdAt
+    updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    tag {
+      id
+      tag
+      createdAt
+      updatedAt
+      posts {
+        nextToken
+      }
+    }
+    owner
+  }
+}
+subscription OnDeleteTagPost {
+  onDeleteTagPost {
+    id
+    postID
+    tagID
+    createdAt
+    updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    tag {
+      id
+      tag
+      createdAt
+      updatedAt
+      posts {
+        nextToken
+      }
+    }
+    owner
   }
 }

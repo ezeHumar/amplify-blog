@@ -11,28 +11,14 @@ import { Blog } from '../types/blog'
 })
 
 export class AppComponent implements OnInit {
-  title = 'amplify-blog';
-  blogs: Array<Blog> = [];
 
   constructor(private api: APIService, private fb: FormBuilder) { }
+
   async ngOnInit() {
-    this.api.ListBlogs().then(event => {
-      this.blogs = (event as any).items;
-    });
+
   }
 
-  blogForm = new FormGroup({
-    name: new FormControl('', Validators.required)
-  });
-
   public onCreate(blog: Blog) {
-    this.api.CreateBlog(blog).then(event => {
-      console.log('blog created successfully!');
-      this.blogForm.reset();
-    })
-      .catch(err => {
-        console.log('error creating blog...', err);
-      });
   }
 
 }

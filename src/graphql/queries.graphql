@@ -1,68 +1,4 @@
 # this is an auto generated file. This will be overwritten
-query GetBlog($id: ID!) {
-  getBlog(id: $id) {
-    id
-    name
-    posts {
-      items {
-        id
-        title
-        blogID
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
-query ListBlogs(
-  $filter: ModelBlogFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      name
-      posts {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    nextToken
-  }
-}
-query GetPost($id: ID!) {
-  getPost(id: $id) {
-    id
-    title
-    blogID
-    blog {
-      id
-      name
-      posts {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    comments {
-      items {
-        id
-        postID
-        content
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-    createdAt
-    updatedAt
-  }
-}
 query ListPosts(
   $filter: ModelPostFilterInput
   $limit: Int
@@ -72,45 +8,74 @@ query ListPosts(
     items {
       id
       title
-      blogID
-      blog {
-        id
-        name
-        createdAt
-        updatedAt
-      }
+      content
+      createdAt
+      updatedAt
+      owner
       comments {
         nextToken
       }
-      createdAt
-      updatedAt
+      tags {
+        nextToken
+      }
     }
     nextToken
+  }
+}
+query GetPost($id: ID!) {
+  getPost(id: $id) {
+    id
+    title
+    content
+    createdAt
+    updatedAt
+    owner
+    comments {
+      items {
+        id
+        postID
+        content
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+    tags {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
   }
 }
 query GetComment($id: ID!) {
   getComment(id: $id) {
     id
     postID
-    post {
-      id
-      title
-      blogID
-      blog {
-        id
-        name
-        createdAt
-        updatedAt
-      }
-      comments {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
     content
     createdAt
     updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    owner
   }
 }
 query ListComments(
@@ -122,16 +87,115 @@ query ListComments(
     items {
       id
       postID
-      post {
-        id
-        title
-        blogID
-        createdAt
-        updatedAt
-      }
       content
       createdAt
       updatedAt
+      post {
+        id
+        title
+        content
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+    }
+    nextToken
+  }
+}
+query ListTags($filter: ModelTagFilterInput, $limit: Int, $nextToken: String) {
+  listTags(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      tag
+      createdAt
+      updatedAt
+      posts {
+        nextToken
+      }
+    }
+    nextToken
+  }
+}
+query GetTag($id: ID!) {
+  getTag(id: $id) {
+    id
+    tag
+    createdAt
+    updatedAt
+    posts {
+      items {
+        id
+        postID
+        tagID
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+}
+query GetTagPost($id: ID!) {
+  getTagPost(id: $id) {
+    id
+    postID
+    tagID
+    createdAt
+    updatedAt
+    post {
+      id
+      title
+      content
+      createdAt
+      updatedAt
+      owner
+      comments {
+        nextToken
+      }
+      tags {
+        nextToken
+      }
+    }
+    tag {
+      id
+      tag
+      createdAt
+      updatedAt
+      posts {
+        nextToken
+      }
+    }
+    owner
+  }
+}
+query ListTagPosts(
+  $filter: ModelTagPostFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTagPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      postID
+      tagID
+      createdAt
+      updatedAt
+      post {
+        id
+        title
+        content
+        createdAt
+        updatedAt
+        owner
+      }
+      tag {
+        id
+        tag
+        createdAt
+        updatedAt
+      }
+      owner
     }
     nextToken
   }
