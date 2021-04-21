@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { APIService } from './API.service';
-import { Blog } from '../types/blog'
+
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  public onCreate(blog: Blog) {
-  }
+  
 
 }
