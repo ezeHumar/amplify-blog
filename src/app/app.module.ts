@@ -12,6 +12,10 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { FormPostComponent } from './components/post/form-post/form-post.component';
+import { DetailPostComponent } from './components/post/detail-post/detail-post.component';
+import { ListPostComponent } from './components/post/list-post/list-post.component';
+import { EditPostComponent } from './components/post/edit-post/edit-post.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -21,7 +25,11 @@ Amplify.configure(awsconfig);
     AppComponent,
     NavbarComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    FormPostComponent,
+    DetailPostComponent,
+    ListPostComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

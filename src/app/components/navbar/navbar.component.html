@@ -6,7 +6,7 @@
             <a class="nav-item nav-link" href="#">About</a>
         </div>
         <div *ngIf="username; else elseBlock" class="navbar-nav">
-            <a class="btn btn-outline-light" href="#">New post</a>
+            <a class="btn btn-outline-light" [routerLink]="['createPost']">New post</a>
             <a class="nav-item nav-link" href="#">{{ username }}</a>
         </div>
         <ng-template #elseBlock>
