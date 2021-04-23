@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { APIService } from 'src/app/API.service';
+import { ActivatedRoute } from '@angular/router'
+import { Post } from '../../../model/post'
 
 @Component({
   selector: 'app-list-post',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListPostComponent implements OnInit {
 
-  constructor() { }
+  constructor(private api: APIService) { }
+
+  postsList: Array<Post> = [];
 
   ngOnInit(): void {
+    this.api.ListPosts().then( data => {
+      this.postsList = (data.items as Array<Post>);
+      console.log(data.items);
+    });
   }
 
 }

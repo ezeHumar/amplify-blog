@@ -16,7 +16,7 @@ export class FormPostComponent implements OnInit {
     title: new FormControl('', Validators.required),
     content: new FormControl('', Validators.required)
   });
-
+  
   onSubmit(){
     let post = new Post(
       this.form.value.title,
