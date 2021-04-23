@@ -16,6 +16,7 @@ import { FormPostComponent } from './components/post/form-post/form-post.compone
 import { DetailPostComponent } from './components/post/detail-post/detail-post.component';
 import { ListPostComponent } from './components/post/list-post/list-post.component';
 import { EditPostComponent } from './components/post/edit-post/edit-post.component';
+import { HomeComponent } from './components/home/home.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -29,7 +30,8 @@ Amplify.configure(awsconfig);
     FormPostComponent,
     DetailPostComponent,
     ListPostComponent,
-    EditPostComponent
+    EditPostComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

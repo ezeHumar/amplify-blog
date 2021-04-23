@@ -2,6 +2,7 @@ body {
     background: #fafafa;
     color: #333333;
     margin-top: 5rem;
+    padding-top: 30px;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -34,8 +35,10 @@ body {
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
-    margin-top: 70px;
+    margin-top:20px;
   }
+
+
 
   .d-flex {
     word-break: break-all; /* Para que el texto del post no salga del flexbox */
@@ -106,3 +109,11 @@ body {
   a{
     color: black;
   }
+
+  .fifty-chars {
+    /* This class is used for the posts list, to make it so the description is limited to 50 characters */
+    width: 50ch;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
