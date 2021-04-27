@@ -1,6 +1,8 @@
 {
-    "resourceNameTruncated": "amplif1a09f930",
-    "userPoolName": "amplifyblog1a09f930_userpool_1a09f930",
+    "identityPoolName": "amplifyblog0dbb7ca0_identitypool_0dbb7ca0",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "amplif0dbb7ca0",
+    "userPoolName": "amplifyblog0dbb7ca0_userpool_0dbb7ca0",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -13,7 +15,7 @@
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
-    "passwordPolicyMinLength": "6",
+    "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
         "email"
@@ -26,11 +28,11 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "amplif1a09f930_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "amplif0dbb7ca0_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "1a09f930",
-    "resourceName": "amplifyblog1a09f930",
-    "authSelections": "userPoolOnly",
+    "sharedId": "0dbb7ca0",
+    "resourceName": "amplifyblog0dbb7ca00dbb7ca0",
+    "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
             "AuthRole",
@@ -44,12 +46,13 @@
         ]
     },
     "useDefault": "manual",
-    "usernameAttributes": [
-        "email"
-    ],
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": false,
     "triggers": "{}",
+    "hostedUI": false,
     "userPoolGroupList": [
-        "amplifyblog"
+        "admin"
     ],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
@@ -57,10 +60,5 @@
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": [],
-    "userPoolGroups": false,
-    "adminQueries": true,
-    "hostedUI": false,
-    "adminQueryGroup": "Admin",
-    "authProviders": []
+    "dependsOn": []
 }

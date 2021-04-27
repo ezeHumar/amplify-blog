@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { APIService } from './API.service';
-
+import { Post } from './model/post';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +9,18 @@ import { APIService } from './API.service';
 })
 
 export class AppComponent implements OnInit {
-
-  constructor(private api: APIService, private fb: FormBuilder) { }
-
-  async ngOnInit() {
-
-  }
-
+  postsList: Post[] = [];
   
-
+  constructor(private ref: ChangeDetectorRef, private api: APIService) {}
+  
+  async ngOnInit() {
+    
+      this.api.ListPosts().then( data => {
+        this.postsList = (data.items as Array<Post>);
+        console.log(data.items);
+      })
+      .catch( err => {
+        console.log("Error getting list post", err);
+      }); 
+  }
 }

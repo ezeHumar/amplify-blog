@@ -1,0 +1,22 @@
+<div class="content-section">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Confirm code </legend>
+            <small>We just sended a verification code, please check your email inbox</small>
+            <br>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" formControlName="username">
+            </div>
+            <br>
+            <div class="from-group">
+                <label for="code">Confirmation code</label>
+                <input type="code" class="form-control" id="code" formControlName="code">
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" info="submit"> Send </button>
+        </div>
+    </form>
+    <br>
+</div>

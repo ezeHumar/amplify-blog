@@ -2,17 +2,17 @@
     <div class="container">
         <a class="navbar-brand" href="/">AmplyBlog</a>
         <div class="navbar-nav me-auto">
-            <a class="nav-item nav-link" href="#">Home</a>
+            <a class="nav-item nav-link" [routerLink]="['']">Home</a>
             <a class="nav-item nav-link" href="#">About</a>
         </div>
         <div *ngIf="username; else elseBlock" class="navbar-nav">
             <a class="btn btn-outline-light" [routerLink]="['/post/new']">New post</a>
             <a class="nav-item nav-link" href="#">{{ username }}</a>
+            <a class="nav-item nav-link" href="" (click)="logOut()">Logout</a>
         </div>
         <ng-template #elseBlock>
-            <a class="nav-item nav-link" href="#">Logout</a>
-            <a class="nav-item nav-link" href="">Login</a>
-            <a class="nav-item nav-link" href="">Register</a>
+            <a class="nav-item nav-link" [routerLink]="['/signin']">LogIn</a>
+            <a class="nav-item nav-link" [routerLink]="['/signup']">SignUp</a>
         </ng-template>
 
     </div>

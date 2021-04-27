@@ -17,6 +17,10 @@ import { DetailPostComponent } from './components/post/detail-post/detail-post.c
 import { ListPostComponent } from './components/post/list-post/list-post.component';
 import { EditPostComponent } from './components/post/edit-post/edit-post.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
+import { SignupComponent } from './components/auth/signup/signup.component';
+import { SigninComponent } from './components/auth/signin/signin.component';
+import { ConfirmComponent } from './components/auth/confirm/confirm.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -31,7 +35,11 @@ Amplify.configure(awsconfig);
     DetailPostComponent,
     ListPostComponent,
     EditPostComponent,
-    HomeComponent
+    HomeComponent,
+    AuthenticationComponent,
+    SignupComponent,
+    SigninComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,

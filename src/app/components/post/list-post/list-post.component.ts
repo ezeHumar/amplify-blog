@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import API from '@aws-amplify/api';
 import { APIService } from 'src/app/API.service';
-import { ActivatedRoute } from '@angular/router'
 import { Post } from '../../../model/post'
 
 @Component({
@@ -14,10 +14,14 @@ export class ListPostComponent implements OnInit {
 
   postsList: Array<Post> = [];
 
-  ngOnInit(): void {
+  ngOnInit(){
+
     this.api.ListPosts().then( data => {
       this.postsList = (data.items as Array<Post>);
       console.log(data.items);
+    })
+    .catch( err => {
+      console.log("Error getting list post", err);
     });
   }
 

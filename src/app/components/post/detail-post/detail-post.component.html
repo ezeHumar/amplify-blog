@@ -7,8 +7,8 @@
                 <!-- <small class="text-muted">{{ object.date_posted | date:" F d, Y " }}</small> -->
                 <!-- {% if object.author == user %} -->
                 <div>
-                    <!-- <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-post' object.id %}">Update</a> -->
-                    <button class="btn btn-danger btn-sm mt-1 mb-1" (click)="onDelete()">Delete</button>
+                    <button *ngIf="isOwner" class="btn btn-secondary btn-sm mt-1 mb-1 ms-1 me-1" [routerLink]="['/post/update', post.id]">Update</button>
+                    <button *ngIf="isOwner" class="btn btn-danger btn-sm mt-1 mb-1 ms-1 me-1" (click)="onDelete()">Delete</button>
                 </div>
             </div>
             <h2 class="article-title">{{ post.title }}</h2>

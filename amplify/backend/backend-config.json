@@ -8,16 +8,12 @@
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authamplifyblog1a09f930"
+              "userPoolId": "authamplifyblog0dbb7ca00dbb7ca0"
             }
           },
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "API_KEY",
-              "apiKeyConfig": {
-                "apiKeyExpirationDays": 365,
-                "description": "public api"
-              }
+              "authenticationType": "AWS_IAM"
             }
           ]
         }
@@ -25,42 +21,28 @@
     }
   },
   "auth": {
-    "amplifyblog1a09f930": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    },
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "amplifyblog1a09f930",
+          "resourceName": "amplifyblog0dbb7ca00dbb7ca0",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
-            "AppClientID"
+            "AppClientID",
+            "IdentityPoolId"
           ]
         }
       ]
+    },
+    "amplifyblog0dbb7ca00dbb7ca0": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
     }
   },
-  "function": {
-    "AdminQueries5a94cd8f": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
-      "build": true,
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "amplifyblog1a09f930",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    }
-  }
+  "function": {}
 }

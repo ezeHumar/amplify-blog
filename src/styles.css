@@ -38,8 +38,6 @@ body {
     margin-top:20px;
   }
 
-
-
   .d-flex {
     word-break: break-all; /* Para que el texto del post no salga del flexbox */
   }
@@ -112,8 +110,14 @@ body {
 
   .fifty-chars {
     /* This class is used for the posts list, to make it so the description is limited to 50 characters */
-    width: 50ch;
+    width: 80ch;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
+  }
+
+:root {
+  --amplify-primary-color: #5f788a;
+  --amplify-primary-tint: #5f788a;
+  --amplify-primary-shade: #5f788a;
+  }
