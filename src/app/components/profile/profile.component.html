@@ -1,19 +1,30 @@
 <div class="content-section">
     <div class="d-flex">
         <img class="rounded-circle account-img"
-            src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+            src="{{ profile.profilePictureURL }}">
+        <input type="file" (change)="onChange($event)">
         <!-- Donde rounded-circle es de bootstrap y account-img es personalizada(css) -->
         <div>
-            <h2>{{ username }}</h2>
-            <p class="text-secondary">{{ email }}</p>
+            <h2>{{ profile.username }}</h2>
+            <p class="text-secondary">{{ profile.email }}</p>
         </div>
     </div>
     <div>
-        <button class="btn btn-outline-info"> Update </button>
+        <!-- <button class="btn btn-outline-info"> Update </button> -->
     </div>
     <hr>
     <div>
         <h3>User posts</h3>
-        <app-list-post [usernameFilter]="usernameURL"></app-list-post>
+        <article *ngFor="let post of userPostsList" class="content-section">
+            <div class="d-flex">
+                <div>
+                    <div class="article-metadata">
+                        <small class="text-muted">aca la fecha</small>
+                    </div>
+                    <h2><a class="article-title" [routerLink]="['/post/detail', post.id]">{{ post.title }}</a></h2>
+                    <p class="article-content fifty-chars">{{ post.content }}</p>
+                </div>
+            </div>
+        </article>
     </div>
 </div>
