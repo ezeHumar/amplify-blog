@@ -1,4 +1,31 @@
 # this is an auto generated file. This will be overwritten
+query GetProfile($id: ID!) {
+  getProfile(id: $id) {
+    id
+    username
+    email
+    profilePictureURL
+    createdAt
+    updatedAt
+  }
+}
+query ListProfiles(
+  $filter: ModelProfileFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      username
+      email
+      profilePictureURL
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
 query ListPosts(
   $filter: ModelPostFilterInput
   $limit: Int
@@ -9,9 +36,9 @@ query ListPosts(
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -27,9 +54,9 @@ query GetPost($id: ID!) {
     id
     title
     content
+    owner
     createdAt
     updatedAt
-    owner
     comments {
       items {
         id
@@ -65,9 +92,9 @@ query GetComment($id: ID!) {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -94,9 +121,9 @@ query ListComments(
         id
         title
         content
+        owner
         createdAt
         updatedAt
-        owner
       }
       owner
     }
@@ -147,9 +174,9 @@ query GetTagPost($id: ID!) {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -185,9 +212,9 @@ query ListTagPosts(
         id
         title
         content
+        owner
         createdAt
         updatedAt
-        owner
       }
       tag {
         id

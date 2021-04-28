@@ -9,18 +9,19 @@ export interface SubscriptionResponse<T> {
   value: GraphQLResult<T>;
 }
 
-export type CreatePostInput = {
+export type CreateProfileInput = {
   id?: string | null;
-  title: string;
-  content: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
 };
 
-export type ModelPostConditionInput = {
-  title?: ModelStringInput | null;
-  content?: ModelStringInput | null;
-  and?: Array<ModelPostConditionInput | null> | null;
-  or?: Array<ModelPostConditionInput | null> | null;
-  not?: ModelPostConditionInput | null;
+export type ModelProfileConditionInput = {
+  email?: ModelStringInput | null;
+  profilePictureURL?: ModelStringInput | null;
+  and?: Array<ModelProfileConditionInput | null> | null;
+  or?: Array<ModelProfileConditionInput | null> | null;
+  not?: ModelProfileConditionInput | null;
 };
 
 export type ModelStringInput = {
@@ -62,14 +63,50 @@ export type ModelSizeInput = {
   between?: Array<number | null> | null;
 };
 
+export type Profile = {
+  __typename: "Profile";
+  id?: string;
+  username?: string;
+  email?: string;
+  profilePictureURL?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type UpdateProfileInput = {
+  id: string;
+  username?: string | null;
+  email?: string | null;
+  profilePictureURL?: string | null;
+};
+
+export type DeleteProfileInput = {
+  id?: string | null;
+};
+
+export type CreatePostInput = {
+  id?: string | null;
+  title: string;
+  content: string;
+  owner?: string | null;
+};
+
+export type ModelPostConditionInput = {
+  title?: ModelStringInput | null;
+  content?: ModelStringInput | null;
+  and?: Array<ModelPostConditionInput | null> | null;
+  or?: Array<ModelPostConditionInput | null> | null;
+  not?: ModelPostConditionInput | null;
+};
+
 export type Post = {
   __typename: "Post";
   id?: string;
   title?: string;
   content?: string;
+  owner?: string | null;
   createdAt?: string;
   updatedAt?: string;
-  owner?: string | null;
   comments?: ModelCommentConnection;
   tags?: ModelTagPostConnection;
 };
@@ -122,6 +159,7 @@ export type UpdatePostInput = {
   id: string;
   title?: string | null;
   content?: string | null;
+  owner?: string | null;
 };
 
 export type DeletePostInput = {
@@ -213,10 +251,27 @@ export type DeleteTagPostInput = {
   id?: string | null;
 };
 
+export type ModelProfileFilterInput = {
+  id?: ModelIDInput | null;
+  username?: ModelStringInput | null;
+  email?: ModelStringInput | null;
+  profilePictureURL?: ModelStringInput | null;
+  and?: Array<ModelProfileFilterInput | null> | null;
+  or?: Array<ModelProfileFilterInput | null> | null;
+  not?: ModelProfileFilterInput | null;
+};
+
+export type ModelProfileConnection = {
+  __typename: "ModelProfileConnection";
+  items?: Array<Profile | null> | null;
+  nextToken?: string | null;
+};
+
 export type ModelPostFilterInput = {
   id?: ModelIDInput | null;
   title?: ModelStringInput | null;
   content?: ModelStringInput | null;
+  owner?: ModelStringInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
   or?: Array<ModelPostFilterInput | null> | null;
   not?: ModelPostFilterInput | null;
@@ -260,14 +315,44 @@ export type ModelTagPostFilterInput = {
   not?: ModelTagPostFilterInput | null;
 };
 
+export type CreateProfileMutation = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UpdateProfileMutation = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type DeleteProfileMutation = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type CreatePostMutation = {
   __typename: "Post";
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -301,9 +386,9 @@ export type UpdatePostMutation = {
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -337,9 +422,9 @@ export type DeletePostMutation = {
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -380,9 +465,9 @@ export type CreateCommentMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -407,9 +492,9 @@ export type UpdateCommentMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -434,9 +519,9 @@ export type DeleteCommentMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -524,9 +609,9 @@ export type CreateTagPostMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -562,9 +647,9 @@ export type UpdateTagPostMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -600,9 +685,9 @@ export type DeleteTagPostMutation = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -626,6 +711,30 @@ export type DeleteTagPostMutation = {
   owner?: string | null;
 };
 
+export type GetProfileQuery = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListProfilesQuery = {
+  __typename: "ModelProfileConnection";
+  items?: Array<{
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    profilePictureURL?: string | null;
+    createdAt: string;
+    updatedAt: string;
+  } | null> | null;
+  nextToken?: string | null;
+};
+
 export type ListPostsQuery = {
   __typename: "ModelPostConnection";
   items?: Array<{
@@ -633,9 +742,9 @@ export type ListPostsQuery = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -653,9 +762,9 @@ export type GetPostQuery = {
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -696,9 +805,9 @@ export type GetCommentQuery = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -725,9 +834,9 @@ export type ListCommentsQuery = {
       id: string;
       title: string;
       content: string;
+      owner?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null;
     owner?: string | null;
   } | null> | null;
@@ -783,9 +892,9 @@ export type GetTagPostQuery = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -823,9 +932,9 @@ export type ListTagPostsQuery = {
       id: string;
       title: string;
       content: string;
+      owner?: string | null;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     };
     tag: {
       __typename: "Tag";
@@ -839,14 +948,44 @@ export type ListTagPostsQuery = {
   nextToken?: string | null;
 };
 
+export type OnCreateProfileSubscription = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnUpdateProfileSubscription = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type OnDeleteProfileSubscription = {
+  __typename: "Profile";
+  id: string;
+  username: string;
+  email: string;
+  profilePictureURL?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type OnCreatePostSubscription = {
   __typename: "Post";
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -880,9 +1019,9 @@ export type OnUpdatePostSubscription = {
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -916,9 +1055,9 @@ export type OnDeletePostSubscription = {
   id: string;
   title: string;
   content: string;
+  owner?: string | null;
   createdAt: string;
   updatedAt: string;
-  owner?: string | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -959,9 +1098,9 @@ export type OnCreateCommentSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -986,9 +1125,9 @@ export type OnUpdateCommentSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1013,9 +1152,9 @@ export type OnDeleteCommentSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1103,9 +1242,9 @@ export type OnCreateTagPostSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1141,9 +1280,9 @@ export type OnUpdateTagPostSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1179,9 +1318,9 @@ export type OnDeleteTagPostSubscription = {
     id: string;
     title: string;
     content: string;
+    owner?: string | null;
     createdAt: string;
     updatedAt: string;
-    owner?: string | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1209,6 +1348,84 @@ export type OnDeleteTagPostSubscription = {
   providedIn: "root"
 })
 export class APIService {
+  async CreateProfile(
+    input: CreateProfileInput,
+    condition?: ModelProfileConditionInput
+  ): Promise<CreateProfileMutation> {
+    const statement = `mutation CreateProfile($input: CreateProfileInput!, $condition: ModelProfileConditionInput) {
+        createProfile(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <CreateProfileMutation>response.data.createProfile;
+  }
+  async UpdateProfile(
+    input: UpdateProfileInput,
+    condition?: ModelProfileConditionInput
+  ): Promise<UpdateProfileMutation> {
+    const statement = `mutation UpdateProfile($input: UpdateProfileInput!, $condition: ModelProfileConditionInput) {
+        updateProfile(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <UpdateProfileMutation>response.data.updateProfile;
+  }
+  async DeleteProfile(
+    input: DeleteProfileInput,
+    condition?: ModelProfileConditionInput
+  ): Promise<DeleteProfileMutation> {
+    const statement = `mutation DeleteProfile($input: DeleteProfileInput!, $condition: ModelProfileConditionInput) {
+        deleteProfile(input: $input, condition: $condition) {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      input
+    };
+    if (condition) {
+      gqlAPIServiceArguments.condition = condition;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <DeleteProfileMutation>response.data.deleteProfile;
+  }
   async CreatePost(
     input: CreatePostInput,
     condition?: ModelPostConditionInput
@@ -1219,9 +1436,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -1271,9 +1488,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -1323,9 +1540,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -1382,9 +1599,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1425,9 +1642,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1468,9 +1685,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1622,9 +1839,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1676,9 +1893,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1730,9 +1947,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1767,6 +1984,61 @@ export class APIService {
     )) as any;
     return <DeleteTagPostMutation>response.data.deleteTagPost;
   }
+  async GetProfile(id: string): Promise<GetProfileQuery> {
+    const statement = `query GetProfile($id: ID!) {
+        getProfile(id: $id) {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {
+      id
+    };
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <GetProfileQuery>response.data.getProfile;
+  }
+  async ListProfiles(
+    filter?: ModelProfileFilterInput,
+    limit?: number,
+    nextToken?: string
+  ): Promise<ListProfilesQuery> {
+    const statement = `query ListProfiles($filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
+        listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+          __typename
+          items {
+            __typename
+            id
+            username
+            email
+            profilePictureURL
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }`;
+    const gqlAPIServiceArguments: any = {};
+    if (filter) {
+      gqlAPIServiceArguments.filter = filter;
+    }
+    if (limit) {
+      gqlAPIServiceArguments.limit = limit;
+    }
+    if (nextToken) {
+      gqlAPIServiceArguments.nextToken = nextToken;
+    }
+    const response = (await API.graphql(
+      graphqlOperation(statement, gqlAPIServiceArguments)
+    )) as any;
+    return <ListProfilesQuery>response.data.listProfiles;
+  }
   async ListPosts(
     filter?: ModelPostFilterInput,
     limit?: number,
@@ -1780,9 +2052,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1817,9 +2089,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -1870,9 +2142,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -1913,9 +2185,9 @@ export class APIService {
               id
               title
               content
+              owner
               createdAt
               updatedAt
-              owner
             }
             owner
           }
@@ -2019,9 +2291,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2073,9 +2345,9 @@ export class APIService {
               id
               title
               content
+              owner
               createdAt
               updatedAt
-              owner
             }
             tag {
               __typename
@@ -2104,6 +2376,60 @@ export class APIService {
     )) as any;
     return <ListTagPostsQuery>response.data.listTagPosts;
   }
+  OnCreateProfileListener: Observable<
+    SubscriptionResponse<OnCreateProfileSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnCreateProfile {
+        onCreateProfile {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnCreateProfileSubscription>>;
+
+  OnUpdateProfileListener: Observable<
+    SubscriptionResponse<OnUpdateProfileSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnUpdateProfile {
+        onUpdateProfile {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnUpdateProfileSubscription>>;
+
+  OnDeleteProfileListener: Observable<
+    SubscriptionResponse<OnDeleteProfileSubscription>
+  > = API.graphql(
+    graphqlOperation(
+      `subscription OnDeleteProfile {
+        onDeleteProfile {
+          __typename
+          id
+          username
+          email
+          profilePictureURL
+          createdAt
+          updatedAt
+        }
+      }`
+    )
+  ) as Observable<SubscriptionResponse<OnDeleteProfileSubscription>>;
+
   OnCreatePostListener: Observable<
     SubscriptionResponse<OnCreatePostSubscription>
   > = API.graphql(
@@ -2114,9 +2440,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -2158,9 +2484,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -2202,9 +2528,9 @@ export class APIService {
           id
           title
           content
+          owner
           createdAt
           updatedAt
-          owner
           comments {
             __typename
             items {
@@ -2253,9 +2579,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2288,9 +2614,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2323,9 +2649,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2445,9 +2771,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2491,9 +2817,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken
@@ -2537,9 +2863,9 @@ export class APIService {
             id
             title
             content
+            owner
             createdAt
             updatedAt
-            owner
             comments {
               __typename
               nextToken

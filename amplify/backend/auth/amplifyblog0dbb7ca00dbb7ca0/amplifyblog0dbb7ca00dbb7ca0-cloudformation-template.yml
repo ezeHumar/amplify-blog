@@ -9,6 +9,18 @@ Parameters:
     Type: String
 
   
+  
+  
+  functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationArn:
+    Type: String
+    Default: functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationArn
+  
+  functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationName:
+    Type: String
+    Default: functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationName
+  
+  
+  
 
     
   identityPoolName:
@@ -137,7 +149,6 @@ Parameters:
   userPoolGroupList:
     Type: CommaDelimitedList
       
-            
   serviceName:
     Type: String
   
@@ -158,6 +169,11 @@ Parameters:
   dependsOn:
     Type: CommaDelimitedList
       
+        
+  authProviders:
+    Type: CommaDelimitedList
+      
+            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -218,6 +234,19 @@ Resources:
         
       
       
+      LambdaConfig:
+        
+        
+        
+        
+        
+          PostConfirmation: !Ref functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationArn
+        
+        
+        
+        
+        
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
@@ -245,6 +274,15 @@ Resources:
   
   
   
+  
+  UserPoolPostConfirmationLambdaInvokePermission:
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties:
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionamplifyblog0dbb7ca00dbb7ca0PostConfirmationName
+      SourceArn: !GetAtt UserPool.Arn
   
   
   

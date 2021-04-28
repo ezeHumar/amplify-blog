@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "amplifyblog0dbb7ca00dbb7ca0": {}
+      },
+      "function": {
+        "amplifyblog0dbb7ca00dbb7ca0PostConfirmation": {
+          "deploymentBucketName": "amplify-amplifyblog-dev-231709-deployment",
+          "s3Key": "amplify-builds/amplifyblog0dbb7ca00dbb7ca0PostConfirmation-6e58517a6659764f6b32-build.zip"
+        }
       }
     }
   }

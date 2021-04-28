@@ -1,3 +1,16 @@
+type Profile @model
+  @auth(rules: [
+    { allow: owner, ownerField: "username" },
+    { allow: public, operations: [read], provider: iam },
+    { allow: private, operations: [read] }
+  ]
+  ) {
+    id: ID!
+    username: String!
+    email: String!
+    profilePictureURL: String
+  }
+
 type Post @model
   @auth(rules: [
     { allow: owner },
@@ -9,6 +22,7 @@ type Post @model
   id: ID!
   title: String!
   content: String!
+  owner: String
   comments: [Comment] @connection(keyName: "commentPost", fields: ["id"])
   tags: [TagPost] @connection(keyName: "tagPost", fields: ["id"])
 }

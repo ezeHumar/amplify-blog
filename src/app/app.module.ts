@@ -21,6 +21,7 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { ConfirmComponent } from './components/auth/confirm/confirm.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -39,7 +40,8 @@ Amplify.configure(awsconfig);
     AuthenticationComponent,
     SignupComponent,
     SigninComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

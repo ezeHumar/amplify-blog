@@ -1,12 +1,42 @@
 # this is an auto generated file. This will be overwritten
+subscription OnCreateProfile {
+  onCreateProfile {
+    id
+    username
+    email
+    profilePictureURL
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateProfile {
+  onUpdateProfile {
+    id
+    username
+    email
+    profilePictureURL
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteProfile {
+  onDeleteProfile {
+    id
+    username
+    email
+    profilePictureURL
+    createdAt
+    updatedAt
+  }
+}
 subscription OnCreatePost {
   onCreatePost {
     id
     title
     content
+    owner
     createdAt
     updatedAt
-    owner
     comments {
       items {
         id
@@ -36,9 +66,9 @@ subscription OnUpdatePost {
     id
     title
     content
+    owner
     createdAt
     updatedAt
-    owner
     comments {
       items {
         id
@@ -68,9 +98,9 @@ subscription OnDeletePost {
     id
     title
     content
+    owner
     createdAt
     updatedAt
-    owner
     comments {
       items {
         id
@@ -106,9 +136,9 @@ subscription OnCreateComment {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -130,9 +160,9 @@ subscription OnUpdateComment {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -154,9 +184,9 @@ subscription OnDeleteComment {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -235,9 +265,9 @@ subscription OnCreateTagPost {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -268,9 +298,9 @@ subscription OnUpdateTagPost {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }
@@ -301,9 +331,9 @@ subscription OnDeleteTagPost {
       id
       title
       content
+      owner
       createdAt
       updatedAt
-      owner
       comments {
         nextToken
       }

@@ -7,7 +7,7 @@
         </div>
         <div *ngIf="username; else elseBlock" class="navbar-nav">
             <a class="btn btn-outline-light" [routerLink]="['/post/new']">New post</a>
-            <a class="nav-item nav-link" href="#">{{ username }}</a>
+            <a class="nav-item nav-link" [routerLink]="['/profile', username]">{{ username }}</a>
             <a class="nav-item nav-link" href="" (click)="logOut()">Logout</a>
         </div>
         <ng-template #elseBlock>

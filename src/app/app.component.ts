@@ -1,6 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { APIService } from './API.service';
-import { Post } from './model/post';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +7,9 @@ import { Post } from './model/post';
 })
 
 export class AppComponent implements OnInit {
-  postsList: Post[] = [];
   
-  constructor(private ref: ChangeDetectorRef, private api: APIService) {}
+  constructor() {}
   
   async ngOnInit() {
-    
-      this.api.ListPosts().then( data => {
-        this.postsList = (data.items as Array<Post>);
-        console.log(data.items);
-      })
-      .catch( err => {
-        console.log("Error getting list post", err);
-      }); 
   }
 }

@@ -40,9 +40,25 @@
     "amplifyblog0dbb7ca00dbb7ca0": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "amplifyblog0dbb7ca00dbb7ca0PostConfirmation",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
       "customAuth": false
     }
   },
-  "function": {}
+  "function": {
+    "amplifyblog0dbb7ca00dbb7ca0PostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
 }

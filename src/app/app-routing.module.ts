@@ -8,6 +8,7 @@ import { DetailPostComponent } from './components/post/detail-post/detail-post.c
 import { EditPostComponent } from './components/post/edit-post/edit-post.component';
 import { FormPostComponent } from './components/post/form-post/form-post.component'
 import { ListPostComponent } from './components/post/list-post/list-post.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path:'post/update/:id', component: EditPostComponent },
   { path:'signin', component: SigninComponent },
   { path:'signup', component: SignupComponent },
-  { path:'signup/confirm', component: SignupComponent }
+  { path:'signup/confirm', component: SignupComponent },
+  { path:'profile/:username', component: ProfileComponent }
 ];
 
 @NgModule({

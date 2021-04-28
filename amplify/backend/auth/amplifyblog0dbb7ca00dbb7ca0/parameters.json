@@ -47,9 +47,9 @@
     },
     "useDefault": "manual",
     "thirdPartyAuth": false,
-    "userPoolGroups": true,
+    "userPoolGroups": false,
     "adminQueries": false,
-    "triggers": "{}",
+    "triggers": "{\n  \"PostConfirmation\": [\n    \"custom\"\n  ]\n}",
     "hostedUI": false,
     "userPoolGroupList": [
         "admin"
@@ -60,5 +60,16 @@
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "amplifyblog0dbb7ca00dbb7ca0PostConfirmation",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
+        }
+    ],
+    "authProviders": []
 }
