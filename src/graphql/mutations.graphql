@@ -7,9 +7,9 @@ mutation CreateProfile(
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 mutation UpdateProfile(
@@ -20,9 +20,9 @@ mutation UpdateProfile(
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 mutation DeleteProfile(
@@ -33,9 +33,9 @@ mutation DeleteProfile(
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 mutation CreatePost(

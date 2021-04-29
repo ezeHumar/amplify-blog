@@ -10,6 +10,7 @@ exports.handler = async (event, context) => {
                 '__typename': {S: 'Profile'},
                 'username': {S: event.userName},
                 'email': {S: event.request.userAttributes.email},
+                'profilePictureURL': {S: "https://amplifyblogcb3897ffa40641e3b95749b821d956fd231709-dev.s3.us-east-2.amazonaws.com/default.png"},
                 'createdAt': {S: date.toISOString()},
                 'updatedAt': {S: date.toISOString()},
             },

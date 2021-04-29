@@ -1,6 +1,5 @@
 type Profile @model
   @auth(rules: [
-    { allow: owner, ownerField: "username" },
     { allow: public, operations: [read], provider: iam },
     { allow: private, operations: [read] }
   ]
@@ -8,7 +7,7 @@ type Profile @model
     id: ID!
     username: String!
     email: String!
-    profilePictureURL: String
+    profilePictureURL: String @auth(rules:[{ allow: owner, ownerField: "username", operations: [update, read] }])
   }
 
 type Post @model

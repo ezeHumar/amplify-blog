@@ -4,9 +4,9 @@ query GetProfile($id: ID!) {
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 query ListProfiles(
@@ -19,9 +19,9 @@ query ListProfiles(
       id
       username
       email
-      profilePictureURL
       createdAt
       updatedAt
+      profilePictureURL
     }
     nextToken
   }

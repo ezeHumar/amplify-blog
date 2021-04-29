@@ -17,6 +17,7 @@ export type CreateProfileInput = {
 };
 
 export type ModelProfileConditionInput = {
+  username?: ModelStringInput | null;
   email?: ModelStringInput | null;
   profilePictureURL?: ModelStringInput | null;
   and?: Array<ModelProfileConditionInput | null> | null;
@@ -68,9 +69,9 @@ export type Profile = {
   id?: string;
   username?: string;
   email?: string;
-  profilePictureURL?: string | null;
   createdAt?: string;
   updatedAt?: string;
+  profilePictureURL?: string | null;
 };
 
 export type UpdateProfileInput = {
@@ -320,9 +321,9 @@ export type CreateProfileMutation = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type UpdateProfileMutation = {
@@ -330,9 +331,9 @@ export type UpdateProfileMutation = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type DeleteProfileMutation = {
@@ -340,9 +341,9 @@ export type DeleteProfileMutation = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type CreatePostMutation = {
@@ -716,9 +717,9 @@ export type GetProfileQuery = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type ListProfilesQuery = {
@@ -728,9 +729,9 @@ export type ListProfilesQuery = {
     id: string;
     username: string;
     email: string;
-    profilePictureURL?: string | null;
     createdAt: string;
     updatedAt: string;
+    profilePictureURL?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -953,9 +954,9 @@ export type OnCreateProfileSubscription = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type OnUpdateProfileSubscription = {
@@ -963,9 +964,9 @@ export type OnUpdateProfileSubscription = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type OnDeleteProfileSubscription = {
@@ -973,9 +974,9 @@ export type OnDeleteProfileSubscription = {
   id: string;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   createdAt: string;
   updatedAt: string;
+  profilePictureURL?: string | null;
 };
 
 export type OnCreatePostSubscription = {
@@ -1358,9 +1359,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1384,9 +1385,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1410,9 +1411,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1991,9 +1992,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2017,9 +2018,9 @@ export class APIService {
             id
             username
             email
-            profilePictureURL
             createdAt
             updatedAt
+            profilePictureURL
           }
           nextToken
         }
@@ -2386,9 +2387,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`
     )
@@ -2404,9 +2405,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`
     )
@@ -2422,9 +2423,9 @@ export class APIService {
           id
           username
           email
-          profilePictureURL
           createdAt
           updatedAt
+          profilePictureURL
         }
       }`
     )

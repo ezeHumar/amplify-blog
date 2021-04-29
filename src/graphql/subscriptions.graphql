@@ -4,9 +4,9 @@ subscription OnCreateProfile {
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 subscription OnUpdateProfile {
@@ -14,9 +14,9 @@ subscription OnUpdateProfile {
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 subscription OnDeleteProfile {
@@ -24,9 +24,9 @@ subscription OnDeleteProfile {
     id
     username
     email
-    profilePictureURL
     createdAt
     updatedAt
+    profilePictureURL
   }
 }
 subscription OnCreatePost {
