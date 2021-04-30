@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit {
   profile: Profile = {}; //The profile that is going to be recovered from the db
   userPostsList: Array<Post> = [];
   authMode: GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
+  isOwner: boolean = false;//Indicates if the user is the owner or the profile being visited
+  usernameLogged: string = ""//Has the username of the logged user (if is there any)
 
   statementGetProfile = `query ListProfiles($filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
     listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -53,16 +55,21 @@ export class ProfileComponent implements OnInit {
 
   async ngOnInit() {
     await Auth.currentAuthenticatedUser()
-      .then(() => {
+      .then((data) => {
         //If the user is authenticated the querie is made using cognito
         this.authMode = GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS;
+        this.usernameLogged = data.username;
       })
       .catch(() => {
         //If the user is authenticated the querie is made using IAM
         this.authMode = GRAPHQL_AUTH_MODE.AWS_IAM;
       });
-    this.getProfile(this.authMode);
+    
     this.getPosts(this.authMode);
+    await this.getProfile(this.authMode);
+    if(this.profile.username === this.usernameLogged){
+      this.isOwner = true;
+    }
   }
 
   async getPosts(authMode: GRAPHQL_AUTH_MODE) {
@@ -88,11 +95,13 @@ export class ProfileComponent implements OnInit {
       Storage.put(this.profile.username!, file, {
         contentType: 'image/png'
       }).then((data) => {
-        console.log(data);
-        this.api.UpdateProfile({id: this.profile.id!, profilePictureURL: "https://" + awsExports.aws_user_files_s3_bucket + ".s3." + awsExports.aws_appsync_region + ".amazonaws.com/public/" + this.profile.username})
         console.log("Image uploaded correctly");
+        this.api.UpdateProfile({id: this.profile.id!, profilePictureURL: "https://" + awsExports.aws_user_files_s3_bucket + ".s3." + awsExports.aws_appsync_region + ".amazonaws.com/public/" + (data as any).key}).then( () => {
+          console.log("Profile updated correctly");
+          window.location.reload();
+        })
       })
-        .catch(err => console.log("Error uploading image"));
+      .catch(err => console.log("Error uploading image"));
     }
   }
 }

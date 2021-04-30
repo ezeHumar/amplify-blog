@@ -24,7 +24,7 @@ export class EditPostComponent implements OnInit {
     content: new FormControl('', Validators.required)
   });
   
-  post = new Post("","");
+  post = new Post("","","");
 
   ngOnInit(): void {
     //Get the post with the id

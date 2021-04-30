@@ -8,9 +8,12 @@ type Profile @model
     username: String!
     email: String!
     profilePictureURL: String @auth(rules:[{ allow: owner, ownerField: "username", operations: [update, read] }])
+    posts: [Post] @connection(keyName: "postProfile", fields: ["id"])
+    comments: [Comment] @connection(keyName: "commentProfile", fields: ["id"])
   }
 
 type Post @model
+  @key(name: "postProfile", fields: ["profileID"])
   @auth(rules: [
     { allow: owner },
     { allow: public, operations: [read], provider: iam },
@@ -22,12 +25,15 @@ type Post @model
   title: String!
   content: String!
   owner: String
+  profileID: ID!
+  profile: Profile @connection(fields: ["profileID"])
   comments: [Comment] @connection(keyName: "commentPost", fields: ["id"])
   tags: [TagPost] @connection(keyName: "tagPost", fields: ["id"])
 }
 
 type Comment @model 
-  @key(name: "commentPost", fields: ["postID", "content"])
+  @key(name: "commentPost", fields: ["postID"])
+  @key(name: "commentProfile", fields: ["profileID"])
   @auth(rules: [
     { allow: owner },
     { allow: public, operations: [read], provider: iam },
@@ -38,7 +44,10 @@ type Comment @model
   id: ID!
   postID: ID!
   content: String!
+  owner: String
   post: Post @connection(fields: ["postID"])
+  profileID: ID!
+  profile: Profile @connection(fields: ["profileID"])
   
 }
 

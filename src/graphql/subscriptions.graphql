@@ -7,6 +7,30 @@ subscription OnCreateProfile {
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnUpdateProfile {
@@ -17,6 +41,30 @@ subscription OnUpdateProfile {
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnDeleteProfile {
@@ -27,6 +75,30 @@ subscription OnDeleteProfile {
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 subscription OnCreatePost {
@@ -35,16 +107,32 @@ subscription OnCreatePost {
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -67,16 +155,32 @@ subscription OnUpdatePost {
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -99,16 +203,32 @@ subscription OnDeletePost {
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -130,15 +250,40 @@ subscription OnCreateComment {
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -146,7 +291,6 @@ subscription OnCreateComment {
         nextToken
       }
     }
-    owner
   }
 }
 subscription OnUpdateComment {
@@ -154,15 +298,40 @@ subscription OnUpdateComment {
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -170,7 +339,6 @@ subscription OnUpdateComment {
         nextToken
       }
     }
-    owner
   }
 }
 subscription OnDeleteComment {
@@ -178,15 +346,40 @@ subscription OnDeleteComment {
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -194,7 +387,6 @@ subscription OnDeleteComment {
         nextToken
       }
     }
-    owner
   }
 }
 subscription OnCreateTag {
@@ -266,8 +458,17 @@ subscription OnCreateTagPost {
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -299,8 +500,17 @@ subscription OnUpdateTagPost {
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -332,8 +542,17 @@ subscription OnDeleteTagPost {
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }

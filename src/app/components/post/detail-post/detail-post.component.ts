@@ -18,7 +18,7 @@ export class DetailPostComponent implements OnInit {
     this.id = route.snapshot.params["id"];//recover the id passed on the url
   }
 
-  post = new Post("","");
+  post = new Post("","", "");
 
   ngOnInit(): void {
     //Get the post with the id

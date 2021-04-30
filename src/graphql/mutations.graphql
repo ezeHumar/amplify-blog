@@ -10,6 +10,30 @@ mutation CreateProfile(
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation UpdateProfile(
@@ -23,6 +47,30 @@ mutation UpdateProfile(
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation DeleteProfile(
@@ -36,6 +84,30 @@ mutation DeleteProfile(
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 mutation CreatePost(
@@ -47,16 +119,32 @@ mutation CreatePost(
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -82,16 +170,32 @@ mutation UpdatePost(
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -117,16 +221,32 @@ mutation DeletePost(
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -151,15 +271,40 @@ mutation CreateComment(
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -167,7 +312,6 @@ mutation CreateComment(
         nextToken
       }
     }
-    owner
   }
 }
 mutation UpdateComment(
@@ -178,15 +322,40 @@ mutation UpdateComment(
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -194,7 +363,6 @@ mutation UpdateComment(
         nextToken
       }
     }
-    owner
   }
 }
 mutation DeleteComment(
@@ -205,15 +373,40 @@ mutation DeleteComment(
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -221,7 +414,6 @@ mutation DeleteComment(
         nextToken
       }
     }
-    owner
   }
 }
 mutation CreateTag(
@@ -305,8 +497,17 @@ mutation CreateTagPost(
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -341,8 +542,17 @@ mutation UpdateTagPost(
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -377,8 +587,17 @@ mutation DeleteTagPost(
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }

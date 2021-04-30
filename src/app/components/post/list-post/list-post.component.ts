@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
-import { APIService } from 'src/app/API.service';
 import { Post } from '../../../model/post'
 
 
@@ -15,7 +14,7 @@ export class ListPostComponent implements OnInit {
   //usernameFilter gets an username an uses it as a filter to only get thar user's posts. Is't used for the user profile
   @Input() usernameFilter: any;
 
-  constructor(private api: APIService) { }
+  constructor() { }
 
   statement = `query ListPosts($filter: ModelPostFilterInput, $limit: Int, $nextToken: String) {
     listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
@@ -26,6 +25,9 @@ export class ListPostComponent implements OnInit {
         content
         owner
         createdAt
+        profile {
+          profilePictureURL
+        }
       }
       nextToken
     }

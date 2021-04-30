@@ -72,32 +72,14 @@ export type Profile = {
   createdAt?: string;
   updatedAt?: string;
   profilePictureURL?: string | null;
+  posts?: ModelPostConnection;
+  comments?: ModelCommentConnection;
 };
 
-export type UpdateProfileInput = {
-  id: string;
-  username?: string | null;
-  email?: string | null;
-  profilePictureURL?: string | null;
-};
-
-export type DeleteProfileInput = {
-  id?: string | null;
-};
-
-export type CreatePostInput = {
-  id?: string | null;
-  title: string;
-  content: string;
-  owner?: string | null;
-};
-
-export type ModelPostConditionInput = {
-  title?: ModelStringInput | null;
-  content?: ModelStringInput | null;
-  and?: Array<ModelPostConditionInput | null> | null;
-  or?: Array<ModelPostConditionInput | null> | null;
-  not?: ModelPostConditionInput | null;
+export type ModelPostConnection = {
+  __typename: "ModelPostConnection";
+  items?: Array<Post | null> | null;
+  nextToken?: string | null;
 };
 
 export type Post = {
@@ -106,8 +88,10 @@ export type Post = {
   title?: string;
   content?: string;
   owner?: string | null;
+  profileID?: string;
   createdAt?: string;
   updatedAt?: string;
+  profile?: Profile;
   comments?: ModelCommentConnection;
   tags?: ModelTagPostConnection;
 };
@@ -123,10 +107,12 @@ export type Comment = {
   id?: string;
   postID?: string;
   content?: string;
+  owner?: string | null;
+  profileID?: string;
   createdAt?: string;
   updatedAt?: string;
+  profile?: Profile;
   post?: Post;
-  owner?: string | null;
 };
 
 export type ModelTagPostConnection = {
@@ -156,29 +142,32 @@ export type Tag = {
   posts?: ModelTagPostConnection;
 };
 
-export type UpdatePostInput = {
+export type UpdateProfileInput = {
   id: string;
-  title?: string | null;
-  content?: string | null;
-  owner?: string | null;
+  username?: string | null;
+  email?: string | null;
+  profilePictureURL?: string | null;
 };
 
-export type DeletePostInput = {
+export type DeleteProfileInput = {
   id?: string | null;
 };
 
-export type CreateCommentInput = {
+export type CreatePostInput = {
   id?: string | null;
-  postID: string;
+  title: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
 };
 
-export type ModelCommentConditionInput = {
-  postID?: ModelIDInput | null;
+export type ModelPostConditionInput = {
+  title?: ModelStringInput | null;
   content?: ModelStringInput | null;
-  and?: Array<ModelCommentConditionInput | null> | null;
-  or?: Array<ModelCommentConditionInput | null> | null;
-  not?: ModelCommentConditionInput | null;
+  profileID?: ModelIDInput | null;
+  and?: Array<ModelPostConditionInput | null> | null;
+  or?: Array<ModelPostConditionInput | null> | null;
+  not?: ModelPostConditionInput | null;
 };
 
 export type ModelIDInput = {
@@ -197,10 +186,41 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null;
 };
 
+export type UpdatePostInput = {
+  id: string;
+  title?: string | null;
+  content?: string | null;
+  owner?: string | null;
+  profileID?: string | null;
+};
+
+export type DeletePostInput = {
+  id?: string | null;
+};
+
+export type CreateCommentInput = {
+  id?: string | null;
+  postID: string;
+  content: string;
+  owner?: string | null;
+  profileID: string;
+};
+
+export type ModelCommentConditionInput = {
+  postID?: ModelIDInput | null;
+  content?: ModelStringInput | null;
+  profileID?: ModelIDInput | null;
+  and?: Array<ModelCommentConditionInput | null> | null;
+  or?: Array<ModelCommentConditionInput | null> | null;
+  not?: ModelCommentConditionInput | null;
+};
+
 export type UpdateCommentInput = {
   id: string;
   postID?: string | null;
   content?: string | null;
+  owner?: string | null;
+  profileID?: string | null;
 };
 
 export type DeleteCommentInput = {
@@ -273,21 +293,18 @@ export type ModelPostFilterInput = {
   title?: ModelStringInput | null;
   content?: ModelStringInput | null;
   owner?: ModelStringInput | null;
+  profileID?: ModelIDInput | null;
   and?: Array<ModelPostFilterInput | null> | null;
   or?: Array<ModelPostFilterInput | null> | null;
   not?: ModelPostFilterInput | null;
-};
-
-export type ModelPostConnection = {
-  __typename: "ModelPostConnection";
-  items?: Array<Post | null> | null;
-  nextToken?: string | null;
 };
 
 export type ModelCommentFilterInput = {
   id?: ModelIDInput | null;
   postID?: ModelIDInput | null;
   content?: ModelStringInput | null;
+  owner?: ModelStringInput | null;
+  profileID?: ModelIDInput | null;
   and?: Array<ModelCommentFilterInput | null> | null;
   or?: Array<ModelCommentFilterInput | null> | null;
   not?: ModelCommentFilterInput | null;
@@ -324,6 +341,34 @@ export type CreateProfileMutation = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type UpdateProfileMutation = {
@@ -334,6 +379,34 @@ export type UpdateProfileMutation = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type DeleteProfileMutation = {
@@ -344,6 +417,34 @@ export type DeleteProfileMutation = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type CreatePostMutation = {
@@ -352,8 +453,26 @@ export type CreatePostMutation = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -361,9 +480,10 @@ export type CreatePostMutation = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -388,8 +508,26 @@ export type UpdatePostMutation = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -397,9 +535,10 @@ export type UpdatePostMutation = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -424,8 +563,26 @@ export type DeletePostMutation = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -433,9 +590,10 @@ export type DeletePostMutation = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -459,16 +617,45 @@ export type CreateCommentMutation = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -478,7 +665,6 @@ export type CreateCommentMutation = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type UpdateCommentMutation = {
@@ -486,16 +672,45 @@ export type UpdateCommentMutation = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -505,7 +720,6 @@ export type UpdateCommentMutation = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type DeleteCommentMutation = {
@@ -513,16 +727,45 @@ export type DeleteCommentMutation = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -532,7 +775,6 @@ export type DeleteCommentMutation = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type CreateTagMutation = {
@@ -611,8 +853,18 @@ export type CreateTagPostMutation = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -649,8 +901,18 @@ export type UpdateTagPostMutation = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -687,8 +949,18 @@ export type DeleteTagPostMutation = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -720,6 +992,34 @@ export type GetProfileQuery = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type ListProfilesQuery = {
@@ -732,6 +1032,14 @@ export type ListProfilesQuery = {
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -744,8 +1052,18 @@ export type ListPostsQuery = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -764,8 +1082,26 @@ export type GetPostQuery = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -773,9 +1109,10 @@ export type GetPostQuery = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -799,16 +1136,45 @@ export type GetCommentQuery = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -818,7 +1184,6 @@ export type GetCommentQuery = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type ListCommentsQuery = {
@@ -828,18 +1193,29 @@ export type ListCommentsQuery = {
     id: string;
     postID: string;
     content: string;
+    owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     post?: {
       __typename: "Post";
       id: string;
       title: string;
       content: string;
       owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
     } | null;
-    owner?: string | null;
   } | null> | null;
   nextToken?: string | null;
 };
@@ -894,8 +1270,18 @@ export type GetTagPostQuery = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -934,6 +1320,7 @@ export type ListTagPostsQuery = {
       title: string;
       content: string;
       owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
     };
@@ -957,6 +1344,34 @@ export type OnCreateProfileSubscription = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnUpdateProfileSubscription = {
@@ -967,6 +1382,34 @@ export type OnUpdateProfileSubscription = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnDeleteProfileSubscription = {
@@ -977,6 +1420,34 @@ export type OnDeleteProfileSubscription = {
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
+  posts?: {
+    __typename: "ModelPostConnection";
+    items?: Array<{
+      __typename: "Post";
+      id: string;
+      title: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
+  comments?: {
+    __typename: "ModelCommentConnection";
+    items?: Array<{
+      __typename: "Comment";
+      id: string;
+      postID: string;
+      content: string;
+      owner?: string | null;
+      profileID: string;
+      createdAt: string;
+      updatedAt: string;
+    } | null> | null;
+    nextToken?: string | null;
+  } | null;
 };
 
 export type OnCreatePostSubscription = {
@@ -985,8 +1456,26 @@ export type OnCreatePostSubscription = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -994,9 +1483,10 @@ export type OnCreatePostSubscription = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1021,8 +1511,26 @@ export type OnUpdatePostSubscription = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -1030,9 +1538,10 @@ export type OnUpdatePostSubscription = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1057,8 +1566,26 @@ export type OnDeletePostSubscription = {
   title: string;
   content: string;
   owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   comments?: {
     __typename: "ModelCommentConnection";
     items?: Array<{
@@ -1066,9 +1593,10 @@ export type OnDeletePostSubscription = {
       id: string;
       postID: string;
       content: string;
+      owner?: string | null;
+      profileID: string;
       createdAt: string;
       updatedAt: string;
-      owner?: string | null;
     } | null> | null;
     nextToken?: string | null;
   } | null;
@@ -1092,16 +1620,45 @@ export type OnCreateCommentSubscription = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1111,7 +1668,6 @@ export type OnCreateCommentSubscription = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type OnUpdateCommentSubscription = {
@@ -1119,16 +1675,45 @@ export type OnUpdateCommentSubscription = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1138,7 +1723,6 @@ export type OnUpdateCommentSubscription = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type OnDeleteCommentSubscription = {
@@ -1146,16 +1730,45 @@ export type OnDeleteCommentSubscription = {
   id: string;
   postID: string;
   content: string;
+  owner?: string | null;
+  profileID: string;
   createdAt: string;
   updatedAt: string;
+  profile?: {
+    __typename: "Profile";
+    id: string;
+    username: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+    profilePictureURL?: string | null;
+    posts?: {
+      __typename: "ModelPostConnection";
+      nextToken?: string | null;
+    } | null;
+    comments?: {
+      __typename: "ModelCommentConnection";
+      nextToken?: string | null;
+    } | null;
+  } | null;
   post?: {
     __typename: "Post";
     id: string;
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1165,7 +1778,6 @@ export type OnDeleteCommentSubscription = {
       nextToken?: string | null;
     } | null;
   } | null;
-  owner?: string | null;
 };
 
 export type OnCreateTagSubscription = {
@@ -1244,8 +1856,18 @@ export type OnCreateTagPostSubscription = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1282,8 +1904,18 @@ export type OnUpdateTagPostSubscription = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1320,8 +1952,18 @@ export type OnDeleteTagPostSubscription = {
     title: string;
     content: string;
     owner?: string | null;
+    profileID: string;
     createdAt: string;
     updatedAt: string;
+    profile?: {
+      __typename: "Profile";
+      id: string;
+      username: string;
+      email: string;
+      createdAt: string;
+      updatedAt: string;
+      profilePictureURL?: string | null;
+    } | null;
     comments?: {
       __typename: "ModelCommentConnection";
       nextToken?: string | null;
@@ -1362,6 +2004,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1388,6 +2058,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1414,6 +2112,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1438,8 +2164,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -1447,9 +2191,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -1490,8 +2235,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -1499,9 +2262,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -1542,8 +2306,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -1551,9 +2333,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -1593,16 +2376,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1612,7 +2424,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1636,16 +2447,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1655,7 +2495,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1679,16 +2518,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1698,7 +2566,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -1841,8 +2708,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1895,8 +2772,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1949,8 +2836,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -1995,6 +2892,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2021,6 +2946,14 @@ export class APIService {
             createdAt
             updatedAt
             profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
           }
           nextToken
         }
@@ -2054,8 +2987,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2091,8 +3034,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -2100,9 +3061,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -2136,16 +3098,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2155,7 +3146,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`;
     const gqlAPIServiceArguments: any = {
@@ -2179,18 +3169,29 @@ export class APIService {
             id
             postID
             content
+            owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             post {
               __typename
               id
               title
               content
               owner
+              profileID
               createdAt
               updatedAt
             }
-            owner
           }
           nextToken
         }
@@ -2293,8 +3294,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2347,6 +3358,7 @@ export class APIService {
               title
               content
               owner
+              profileID
               createdAt
               updatedAt
             }
@@ -2390,6 +3402,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -2408,6 +3448,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -2426,6 +3494,34 @@ export class APIService {
           createdAt
           updatedAt
           profilePictureURL
+          posts {
+            __typename
+            items {
+              __typename
+              id
+              title
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          comments {
+            __typename
+            items {
+              __typename
+              id
+              postID
+              content
+              owner
+              profileID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
         }
       }`
     )
@@ -2442,8 +3538,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -2451,9 +3565,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -2486,8 +3601,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -2495,9 +3628,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -2530,8 +3664,26 @@ export class APIService {
           title
           content
           owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           comments {
             __typename
             items {
@@ -2539,9 +3691,10 @@ export class APIService {
               id
               postID
               content
+              owner
+              profileID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
@@ -2573,16 +3726,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2592,7 +3774,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`
     )
@@ -2608,16 +3789,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2627,7 +3837,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`
     )
@@ -2643,16 +3852,45 @@ export class APIService {
           id
           postID
           content
+          owner
+          profileID
           createdAt
           updatedAt
+          profile {
+            __typename
+            id
+            username
+            email
+            createdAt
+            updatedAt
+            profilePictureURL
+            posts {
+              __typename
+              nextToken
+            }
+            comments {
+              __typename
+              nextToken
+            }
+          }
           post {
             __typename
             id
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2662,7 +3900,6 @@ export class APIService {
               nextToken
             }
           }
-          owner
         }
       }`
     )
@@ -2773,8 +4010,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2819,8 +4066,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken
@@ -2865,8 +4122,18 @@ export class APIService {
             title
             content
             owner
+            profileID
             createdAt
             updatedAt
+            profile {
+              __typename
+              id
+              username
+              email
+              createdAt
+              updatedAt
+              profilePictureURL
+            }
             comments {
               __typename
               nextToken

@@ -7,6 +7,30 @@ query GetProfile($id: ID!) {
     createdAt
     updatedAt
     profilePictureURL
+    posts {
+      items {
+        id
+        title
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    comments {
+      items {
+        id
+        postID
+        content
+        owner
+        profileID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
   }
 }
 query ListProfiles(
@@ -22,6 +46,12 @@ query ListProfiles(
       createdAt
       updatedAt
       profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
     }
     nextToken
   }
@@ -37,8 +67,17 @@ query ListPosts(
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -55,16 +94,32 @@ query GetPost($id: ID!) {
     title
     content
     owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     comments {
       items {
         id
         postID
         content
+        owner
+        profileID
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -86,15 +141,40 @@ query GetComment($id: ID!) {
     id
     postID
     content
+    owner
+    profileID
     createdAt
     updatedAt
+    profile {
+      id
+      username
+      email
+      createdAt
+      updatedAt
+      profilePictureURL
+      posts {
+        nextToken
+      }
+      comments {
+        nextToken
+      }
+    }
     post {
       id
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -102,7 +182,6 @@ query GetComment($id: ID!) {
         nextToken
       }
     }
-    owner
   }
 }
 query ListComments(
@@ -115,17 +194,27 @@ query ListComments(
       id
       postID
       content
+      owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       post {
         id
         title
         content
         owner
+        profileID
         createdAt
         updatedAt
       }
-      owner
     }
     nextToken
   }
@@ -175,8 +264,17 @@ query GetTagPost($id: ID!) {
       title
       content
       owner
+      profileID
       createdAt
       updatedAt
+      profile {
+        id
+        username
+        email
+        createdAt
+        updatedAt
+        profilePictureURL
+      }
       comments {
         nextToken
       }
@@ -213,6 +311,7 @@ query ListTagPosts(
         title
         content
         owner
+        profileID
         createdAt
         updatedAt
       }

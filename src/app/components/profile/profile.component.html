@@ -1,8 +1,17 @@
 <div class="content-section">
     <div class="d-flex">
-        <img class="rounded-circle account-img"
-            src="{{ profile.profilePictureURL }}">
-        <input type="file" (change)="onChange($event)">
+
+        <label *ngIf="isOwner; else elseBlock" class="rounded-circle account-img-container" for="upload-photo">
+            <img class="rounded-circle account-img" src="{{ profile.profilePictureURL }}">
+            <div class="middle-img">
+                <div class="text-img">Upload</div>
+            </div>
+        </label>
+
+        <ng-template #elseBlock>
+            <img class="rounded-circle account-img" src="{{ profile.profilePictureURL }}">
+        </ng-template>
+
         <!-- Donde rounded-circle es de bootstrap y account-img es personalizada(css) -->
         <div>
             <h2>{{ profile.username }}</h2>
@@ -10,7 +19,8 @@
         </div>
     </div>
     <div>
-        <!-- <button class="btn btn-outline-info"> Update </button> -->
+
+        <input *ngIf="isOwner" type="file" id="upload-photo" (change)="onChange($event)">
     </div>
     <hr>
     <div>

@@ -83,7 +83,41 @@ body {
     height: 125px;
     width: 125px;
     margin-right: 25px;
-    margin-bottom: 16px;
+    margin-bottom: 0px;
+    display: block;
+    transition: .3s ease;
+    backface-visibility: hidden;
+  }
+
+  .account-img-container{
+    position: relative;
+    width: 125px;
+    margin-right: 25px;
+    cursor: pointer;
+  }
+
+  .account-img-container:hover .account-img{
+    opacity: 0.3;
+  }
+
+  .account-img-container:hover .middle-img{
+    opacity: 1;
+  }
+
+  .text-img {
+    color: rgb(88, 88, 88);
+    font-size: 19px;
+  }
+
+  .middle-img {
+    transition: .3s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
   }
   
   .account-heading {
@@ -121,3 +155,16 @@ body {
   --amplify-primary-tint: #5f788a;
   --amplify-primary-shade: #5f788a;
   }
+  amplify-authenticator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }
+
+
+  #upload-photo {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+ }
