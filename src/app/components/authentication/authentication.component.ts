@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, Input } from '@angular/core';
 import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } from '@aws-amplify/ui-components';
-
 
 @Component({
   selector: 'app-authentication',
@@ -8,15 +7,16 @@ import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } 
   styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit {
+  @Input() authState: any;
+
   title = 'amplify-angular-auth';
   user: CognitoUserInterface | undefined;
-  authState: AuthState = AuthState.Loading;
 
   formFieldsSignUp: FormFieldTypes = [];
   formFieldsSignIn: FormFieldTypes = [];
   formFieldsForgotPass: FormFieldTypes = [];
 
-  constructor(private ref: ChangeDetectorRef) {
+  constructor(private ref: ChangeDetectorRef, private el: ElementRef) {
     this.formFieldsSignUp = [
       {
         type: "email",
@@ -61,17 +61,15 @@ export class AuthenticationComponent implements OnInit {
         required: true,
       }
     ]
-
-    
   }
 
   ngOnInit() {
-    
     onAuthUIStateChange((authState, authData) => {
       this.authState = authState;
       this.user = authData as CognitoUserInterface;
       this.ref.detectChanges();
     })
+    console.log(this.authState);
   }
 
   ngOnDestroy() {

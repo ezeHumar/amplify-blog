@@ -4,7 +4,8 @@
         <div class="navbar-nav me-auto">
             <a class="nav-item nav-link" [routerLink]="['']">Home</a>
             <a class="nav-item nav-link" href="#">About</a>
-            <a class="nav-item nav-link" [routerLink]="['/auth']">Auth</a>
+            <!-- <a class="nav-item nav-link" [routerLink]="['/auth']">Auth</a> -->
+            <!-- <a class="nav-item nav-link" (click)="showDialog()" >Auth</a> -->
         </div>
         <div *ngIf="username; else elseBlock" class="navbar-nav">
             <a class="btn btn-outline-light" [routerLink]="['/post/new']">New post</a>
@@ -12,9 +13,25 @@
             <a class="nav-item nav-link" href="" (click)="logOut()">Logout</a>
         </div>
         <ng-template #elseBlock>
-            <a class="nav-item nav-link" [routerLink]="['/signin']">LogIn</a>
-            <a class="nav-item nav-link" [routerLink]="['/signup']">SignUp</a>
+            <button class="btn btn-outline-light" style="margin-right: 3px;" (click)="showSignin()">Sign
+                In</button>
+            <button class="btn btn-light" style="margin-left: 3px;" (click)="showSignup()">Sign Up</button>
         </ng-template>
 
     </div>
 </nav>
+
+<div id="modal_signup" class="hhidden">
+    <div class="mmodal">
+        <app-authentication [authState]="'signup'"></app-authentication>
+    </div>
+    <div (click)="close()" class="mmodal-background"></div>
+</div>
+
+<div id="modal_signin" class="hhidden">
+    <div class="mmodal">
+        <app-authentication [authState]="'signin'"></app-authentication>
+    </div>
+    <div (click)="close()" class="mmodal-background"></div>
+</div>
+
