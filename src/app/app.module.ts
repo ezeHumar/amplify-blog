@@ -22,6 +22,8 @@ import { SignupComponent } from './components/auth/signup/signup.component';
 import { SigninComponent } from './components/auth/signin/signin.component';
 import { ConfirmComponent } from './components/auth/confirm/confirm.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AuthGuard } from './services/auth-guard.service';
+import { WrongRouteComponent } from './components/wrong-route/wrong-route.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -41,7 +43,8 @@ Amplify.configure(awsconfig);
     SignupComponent,
     SigninComponent,
     ConfirmComponent,
-    ProfileComponent
+    ProfileComponent,
+    WrongRouteComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +53,9 @@ Amplify.configure(awsconfig);
     ReactiveFormsModule,
     AmplifyUIAngularModule /* Amplify module */
   ],
-  providers: [],
+  providers: [ 
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

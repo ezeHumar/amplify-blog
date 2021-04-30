@@ -9,18 +9,22 @@ import { EditPostComponent } from './components/post/edit-post/edit-post.compone
 import { FormPostComponent } from './components/post/form-post/form-post.component'
 import { ListPostComponent } from './components/post/list-post/list-post.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { WrongRouteComponent } from './components/wrong-route/wrong-route.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path:'post', component: ListPostComponent },
   { path:'post/detail/:id', component: DetailPostComponent },
-  { path:'post/new', component: FormPostComponent },
-  { path:'post/update/:id', component: EditPostComponent },
+  { path:'post/new', component: FormPostComponent, canActivate: [AuthGuard] },
+  { path:'post/update/:id', component: EditPostComponent, canActivate: [AuthGuard] },
   { path:'signin', component: SigninComponent },
   { path:'signup', component: SignupComponent },
   { path:'signup/confirm', component: SignupComponent },
   { path:'profile/:username', component: ProfileComponent },
-  { path:'auth', component: AuthenticationComponent }
+  { path:'auth', component: AuthenticationComponent },
+  { path:'404', component: WrongRouteComponent},
+  { path: '**', redirectTo: '/404', pathMatch: 'full' }
 ];
 
 @NgModule({
