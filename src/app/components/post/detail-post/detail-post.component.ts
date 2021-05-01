@@ -33,7 +33,7 @@ export class DetailPostComponent implements OnInit {
       createdAt
       profile {
         __typename
-        username
+        profilePictureURL
       }
       comments {
         __typename

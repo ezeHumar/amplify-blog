@@ -4,7 +4,7 @@
             src="{{ post.profile!.profilePictureURL }}">
         <div>
             <div class="article-metadata">
-                <a class="mr-2" [routerLink]="['/profile', post.owner]"> {{ post.owner }}</a>
+                <a class="mr-2 profile-link" [routerLink]="['/profile', post.owner]"> {{ post.owner }}</a>
                 <small class="text-muted">aca la fecha</small>
             </div>
             <h2><a class="article-title" [routerLink]="['/post/detail', post.id]">{{ post.title }}</a></h2>

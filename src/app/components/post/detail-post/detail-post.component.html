@@ -1,6 +1,6 @@
 <article class="content-section">
     <div class="d-flex">
-        <img class="rounded-circle flex-shrink-0 article-img" src="https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg">
+        <img class="rounded-circle flex-shrink-0 article-img" src="{{ post.profile!.profilePictureURL}}">
         <div>
             <div class="article-metadata">
                 <!-- <a class="mr-2" href="#">{{ post.owner }}</a> -->
@@ -9,6 +9,10 @@
                 <div>
                     <button *ngIf="isOwner" class="btn btn-secondary btn-sm mt-1 mb-1 ms-1 me-1" [routerLink]="['/post/update', post.id]">Update</button>
                     <button *ngIf="isOwner" class="btn btn-danger btn-sm mt-1 mb-1 ms-1 me-1" (click)="onDelete()">Delete</button>
+                </div>
+                <div>
+                    <a class="mr-2 profile-link" [routerLink]="['/profile', post.owner]"> {{ post.owner }}</a>
+                    <small class="text-muted">aca la fecha</small>
                 </div>
             </div>
             <h2 class="article-title">{{ post.title }}</h2>
