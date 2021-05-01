@@ -7,7 +7,9 @@ type Profile @model
     id: ID!
     username: String!
     email: String!
-    profilePictureURL: String @auth(rules:[{ allow: owner, ownerField: "username", operations: [update, read] }])
+    profilePictureURL: String @auth(rules:[{ allow: owner, ownerField: "username", operations: [update, read] },
+                                           { allow: public, operations: [read], provider: iam },
+                                           { allow: private, operations: [read] }])
     posts: [Post] @connection(keyName: "postProfile", fields: ["id"])
     comments: [Comment] @connection(keyName: "commentProfile", fields: ["id"])
   }

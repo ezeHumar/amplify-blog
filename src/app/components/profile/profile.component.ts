@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { API, graphqlOperation, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
+import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 import { Storage, Auth } from 'aws-amplify';
 import { APIService } from 'src/app/API.service';
 import { Post } from 'src/app/model/post';
