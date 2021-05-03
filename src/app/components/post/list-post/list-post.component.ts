@@ -56,6 +56,5 @@ export class ListPostComponent implements OnInit {
     //This function gets the posts from the db
     const res = await API.graphql({ query: this.statement, variables: undefined, authMode: authMode });
     this.postsList = (res as any).data.listPosts.items; //The res variable is parsed beceuse if it's not it gives an error
-    console.log((res as any).data.listPosts.items);
   }
 }

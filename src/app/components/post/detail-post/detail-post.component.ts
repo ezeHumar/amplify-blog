@@ -5,6 +5,7 @@ import { Auth } from 'aws-amplify';
 import { Post } from '../../../model/post'
 import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 import { Comment } from 'src/app/model/comment';
+import { Profile } from 'src/app/model/profile';
 
 @Component({
   selector: 'app-detail-post',
@@ -18,6 +19,7 @@ export class DetailPostComponent implements OnInit {
   isOwner: boolean = false; //to check if the user authenticated is owner of the post
   authMode: GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
   usernameLogged: String = "";//Has the username of the logged user (if is there any)
+  postProfile: Profile = {};//Profile of the post owner
 
   postComments: Comment[] | undefined = [];//Comments that belong to the post
 
@@ -77,18 +79,30 @@ export class DetailPostComponent implements OnInit {
 
       await this.getPost(this.authMode);
 
+      //The profile of the post owner is saved
+      this.postProfile = this.post.profile!;
+
       //Recover the post's comments
       this.postComments = this.getComments(this.post);
       
       if(this.usernameLogged === this.post.owner){
         this.isOwner = true;
       }
-
   }
 
   //This fuction return the comments of the post that receives
   getComments(post: Post) {
     return (post as any).comments.items;
+  }
+
+  //This function adds a comment received to the comments array
+  addCommentCreated(newComment: Comment){
+    try {
+      this.postComments!.push(newComment);
+    } catch (error) {
+      console.log("The comment has to exist");
+    }
+    
   }
 
   //This function gets the post from the db using the id from the url

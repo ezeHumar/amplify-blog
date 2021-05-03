@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { APIService } from 'src/app/API.service';
 import { Comment } from 'src/app/model/comment';
 import { Profile } from 'src/app/model/profile';
+import { DetailPostComponent } from '../../post/detail-post/detail-post.component'
 
 @Component({
   selector: 'app-form-comment',
@@ -21,7 +22,7 @@ export class FormCommentComponent implements OnInit {
     content: new FormControl('', Validators.required)
   });
   
-  constructor(private api: APIService) { }
+  constructor(private api: APIService, private detailPost: DetailPostComponent) { }
 
   ngOnInit(): void {
     //First the logged in user profile is queried
@@ -34,7 +35,18 @@ export class FormCommentComponent implements OnInit {
 
   //This function triggers when the user submits the comment
   onSubmit(){
-    //The coment is created, with the form content, the post id and the user logeedin's id
+    //The comment is created with the form content, the post id and the user logeedin's id
+
+    //A 'dummy' comment is created to then show imediatly to the user the new comment submited
+    let newCommentDummy = new Comment(
+      this.postID,
+      this.form.value.content,
+      this.profile.id!,
+      this.profile
+      )
+
+    //A 'real' comment is created to sent to the API
+    //The 'dummy' comment isn't sent to the api beceause a comment with a profile isn't accepted
     let newComment = new Comment(
       this.postID,
       this.form.value.content,
@@ -44,8 +56,12 @@ export class FormCommentComponent implements OnInit {
     //The new comment is passed to the api
     this.api.CreateComment(newComment).then( data => {
       console.log("Comment created succesfully");
+      //The 'dummy' comment is sent to the list of comments on the post detail component
+      this.detailPost.addCommentCreated(newCommentDummy);
+      //The comment form is reset
+      this.form.reset();
     })
-    .catch(() => {
+    .catch((err) => {
       console.log("Error creating comment");
     });
   }

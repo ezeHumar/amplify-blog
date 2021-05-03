@@ -7,9 +7,10 @@ export class Comment {
     profileID: string;
     profile?: Profile;
 
-    constructor(postID: string, content: string, profileID: string){
+    constructor(postID: string, content: string, profileID: string, profile?: Profile){
         this.postID = postID;
         this.content = content;
         this.profileID = profileID;
+        this.profile = profile;
     }
 }

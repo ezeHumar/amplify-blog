@@ -52,8 +52,6 @@ export class FormPostComponent implements OnInit {
     }).catch(() => {
       console.log("Error getting username");
     });
-
-    
   }
 
   ngOnInit(): void {
