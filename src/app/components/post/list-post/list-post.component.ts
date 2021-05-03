@@ -11,7 +11,7 @@ import { Post } from '../../../model/post'
 })
 export class ListPostComponent implements OnInit {
 
-  //usernameFilter gets an username an uses it as a filter to only get thar user's posts. Is't used for the user profile
+  //usernameFilter gets an username and uses it as a filter to only get thar user's posts. Is't used for the user profile
   @Input() usernameFilter: any;
 
   constructor() { }

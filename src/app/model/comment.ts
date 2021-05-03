@@ -1,8 +1,11 @@
+import { Profile } from "./profile";
+
 export class Comment {
     id?: string | null;
     postID: string;
     content: string;
     profileID: string;
+    profile?: Profile;
 
     constructor(postID: string, content: string, profileID: string){
         this.postID = postID;

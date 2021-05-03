@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { Auth } from 'aws-amplify';
 import { Post } from '../../../model/post'
 import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
-
+import { Comment } from 'src/app/model/comment';
 
 @Component({
   selector: 'app-detail-post',
@@ -17,8 +17,9 @@ export class DetailPostComponent implements OnInit {
   post = new Post("","","");
   isOwner: boolean = false; //to check if the user authenticated is owner of the post
   authMode: GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
-  usernameLogged: String = ""//Has the username of the logged user (if is there any)
+  usernameLogged: String = "";//Has the username of the logged user (if is there any)
 
+  postComments: Comment[] | undefined = [];//Comments that belong to the post
 
   constructor(private api: APIService, private route: ActivatedRoute, private router: Router) { 
     this.id = route.snapshot.params["id"];//recover the id passed on the url
@@ -43,6 +44,9 @@ export class DetailPostComponent implements OnInit {
           content
           owner
           createdAt
+          profile {
+            profilePictureURL
+          }
         }
         nextToken
       }
@@ -65,7 +69,6 @@ export class DetailPostComponent implements OnInit {
         //If the user is authenticated the querie is made using cognito
         this.authMode = GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS;
         this.usernameLogged = data.username;
-        console.log(data);
       })
       .catch(() => {
         //If the user is authenticated the querie is made using IAM
@@ -73,22 +76,29 @@ export class DetailPostComponent implements OnInit {
       });
 
       await this.getPost(this.authMode);
+
+      //Recover the post's comments
+      this.postComments = this.getComments(this.post);
       
       if(this.usernameLogged === this.post.owner){
         this.isOwner = true;
       }
-      console.log(this.isOwner, this.post.owner, this.usernameLogged)
 
   }
 
+  //This fuction return the comments of the post that receives
+  getComments(post: Post) {
+    return (post as any).comments.items;
+  }
+
+  //This function gets the post from the db using the id from the url
   async getPost(authMode: GRAPHQL_AUTH_MODE) {
-    //This function gets the post from the db using the id from the url
     console.log(this.id);
     const res = await API.graphql({ query: this.statement, variables: {id : this.id}, authMode: authMode });
     this.post = (res as any).data.getPost; //The res variable is parsed beceuse if it's not it gives an error
-    console.log(this.post);
   }
 
+  //This function deletes the post
   onDelete(){
     //The DeletePost function is called passing only the id. If the entire post is passed it gives an error because the attributes do not match
     this.api.DeletePost({"id": this.post.id }).then( data => {

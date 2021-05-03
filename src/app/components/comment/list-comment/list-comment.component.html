@@ -1,1 +1,13 @@
-<p>list-comment works!</p>
+<article *ngFor="let comment of comments" class="content-section">
+    <div class="d-flex">
+        <img class="rounded-circle flex-shrink-0 article-img"
+            src="{{ comment.profile.profilePictureURL }}">
+        <div>
+            <div class="article-metadata">
+                <a class="mr-2 profile-link" [routerLink]="['/profile', comment.owner]"> {{ comment.owner }}</a>
+                <small class="text-muted">aca la fecha</small>
+            </div>
+            <p class="article-content">{{ comment.content }}</p>
+        </div>
+    </div>
+</article>

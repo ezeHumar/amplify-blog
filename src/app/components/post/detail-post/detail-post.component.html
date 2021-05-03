@@ -25,6 +25,8 @@
 
 <h5 class="mb-3">Comments</h5>
 
+<app-list-comment [comments]="postComments" ></app-list-comment>
+
 <div *ngIf="usernameLogged">
     <app-form-comment [usernameLogged]="this.usernameLogged" [postID]="post.id"></app-form-comment>
 </div>
