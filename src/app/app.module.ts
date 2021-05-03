@@ -24,6 +24,8 @@ import { ConfirmComponent } from './components/auth/confirm/confirm.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AuthGuard } from './services/auth-guard.service';
 import { WrongRouteComponent } from './components/wrong-route/wrong-route.component';
+import { FormCommentComponent } from './components/comment/form-comment/form-comment.component';
+import { ListCommentComponent } from './components/comment/list-comment/list-comment.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -44,7 +46,9 @@ Amplify.configure(awsconfig);
     SigninComponent,
     ConfirmComponent,
     ProfileComponent,
-    WrongRouteComponent
+    WrongRouteComponent,
+    FormCommentComponent,
+    ListCommentComponent
   ],
   imports: [
     BrowserModule,

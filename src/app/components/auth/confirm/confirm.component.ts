@@ -9,8 +9,8 @@ import { Auth } from 'aws-amplify';
   styleUrls: ['./confirm.component.css']
 })
 export class ConfirmComponent implements OnInit {
-
   @Input() username: any;
+  
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   form = new FormGroup({

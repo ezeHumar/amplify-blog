@@ -3,7 +3,7 @@ import { APIService } from 'src/app/API.service';
 import { ActivatedRoute, Router } from '@angular/router'
 import { Auth } from 'aws-amplify';
 import { Post } from '../../../model/post'
-import { API, graphqlOperation, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
+import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 
 
 @Component({
@@ -14,6 +14,7 @@ import { API, graphqlOperation, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 export class DetailPostComponent implements OnInit {
 
   id: string = ""; //id of the post
+  post = new Post("","","");
   isOwner: boolean = false; //to check if the user authenticated is owner of the post
   authMode: GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
   usernameLogged: String = ""//Has the username of the logged user (if is there any)
@@ -56,8 +57,6 @@ export class DetailPostComponent implements OnInit {
       }
     }
   }`;
-
-  post = new Post("","", "");
 
   async ngOnInit() {
 

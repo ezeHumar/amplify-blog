@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-9">
+            <div class="d-flex">
+                <img class="rounded-circle flex-shrink-0 article-img" src="{{ '' }}">
+                <div class="flex-fill">
+                    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+                        <fieldset>
+                            <div class="from-group">
+                                <textarea class="form-control" id="content" rows="5"
+                                    placeholder="Your comment here. Be nice..." formControlName="content"></textarea>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <button class="btn btn-outline-info mt-2 " info="submit">Comment!</button>
+                        </div>
+                    </form>
+                    
+                </div>
+                    
+            <br>
+        </div>
+    </div>
+</div>

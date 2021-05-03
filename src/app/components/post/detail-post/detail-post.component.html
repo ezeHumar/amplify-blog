@@ -7,8 +7,10 @@
                 <!-- <small class="text-muted">{{ object.date_posted | date:" F d, Y " }}</small> -->
                 <!-- {% if object.author == user %} -->
                 <div>
-                    <button *ngIf="isOwner" class="btn btn-secondary btn-sm mt-1 mb-1 ms-1 me-1" [routerLink]="['/post/update', post.id]">Update</button>
-                    <button *ngIf="isOwner" class="btn btn-danger btn-sm mt-1 mb-1 ms-1 me-1" (click)="onDelete()">Delete</button>
+                    <button *ngIf="isOwner" class="btn btn-secondary btn-sm mt-1 mb-1 ms-1 me-1"
+                        [routerLink]="['/post/update', post.id]">Update</button>
+                    <button *ngIf="isOwner" class="btn btn-danger btn-sm mt-1 mb-1 ms-1 me-1"
+                        (click)="onDelete()">Delete</button>
                 </div>
                 <div>
                     <a class="mr-2 profile-link" [routerLink]="['/profile', post.owner]"> {{ post.owner }}</a>
@@ -20,3 +22,9 @@
         </div>
     </div>
 </article>
+
+<h5 class="mb-3">Comments</h5>
+
+<div *ngIf="usernameLogged">
+    <app-form-comment [usernameLogged]="this.usernameLogged" [postID]="post.id"></app-form-comment>
+</div>
