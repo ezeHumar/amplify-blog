@@ -4,7 +4,6 @@
         <div class="navbar-nav me-auto">
             <a class="nav-item nav-link" [routerLink]="['']">Home</a>
             <a class="nav-item nav-link"  [routerLink]="['/about']">About</a>
-            <a class="nav-item nav-link" [routerLink]="['/auth']">Auth</a>
         </div>
         <div *ngIf="username; else elseBlock" class="navbar-nav">
             <a class="btn btn-outline-light" [routerLink]="['/post/new']">New post</a>
@@ -12,8 +11,8 @@
             <a class="nav-item nav-link" href="" (click)="logOut()">Logout</a>
         </div>
         <ng-template #elseBlock>
-            <a class="nav-item nav-link" [routerLink]="['/signin']">LogIn</a>
-            <a class="nav-item nav-link" [routerLink]="['/signup']">SignUp</a>
+            <button class="btn btn-outline-light me-1" (click)="openSignin()">LogIn</button>
+            <button class="btn btn-light ms-1" (click)="openSignup()">SignUp</button>
         </ng-template>
 
     </div>

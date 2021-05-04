@@ -26,6 +26,7 @@ import { AuthGuard } from './services/auth-guard.service';
 import { WrongRouteComponent } from './components/wrong-route/wrong-route.component';
 import { FormCommentComponent } from './components/comment/form-comment/form-comment.component';
 import { ListCommentComponent } from './components/comment/list-comment/list-comment.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -55,7 +56,8 @@ Amplify.configure(awsconfig);
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AmplifyUIAngularModule /* Amplify module */
+    AmplifyUIAngularModule,
+    NgbModule /* Amplify module */
   ],
   providers: [ 
     AuthGuard

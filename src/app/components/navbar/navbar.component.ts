@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Auth } from 'aws-amplify';
+import { AuthenticationComponent } from '../authentication/authentication.component';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +12,7 @@ import { Auth } from 'aws-amplify';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private modalService: NgbModal) { }
 
   username: string = "";
 
@@ -33,6 +35,16 @@ export class NavbarComponent implements OnInit {
     });
       
     
+  }
+  
+  openSignup() {
+    const modalRef = this.modalService.open(AuthenticationComponent);
+    modalRef.componentInstance.authState = 'signup';
+  }
+
+  openSignin() {
+    const modalRef = this.modalService.open(AuthenticationComponent);
+    modalRef.componentInstance.authState = 'signin';
   }
 
 }

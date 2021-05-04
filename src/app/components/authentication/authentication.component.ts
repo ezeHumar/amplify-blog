@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } from '@aws-amplify/ui-components';
 
 
@@ -8,9 +8,10 @@ import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } 
   styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit {
+  @Input() authState: any;
+  
   title = 'amplify-angular-auth';
   user: CognitoUserInterface | undefined;
-  authState: AuthState = AuthState.Loading;
 
   formFieldsSignUp: FormFieldTypes = [];
   formFieldsSignIn: FormFieldTypes = [];
