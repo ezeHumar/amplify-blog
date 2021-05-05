@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Auth } from 'aws-amplify';
+import { AuthenticationComponent } from '../../authentication/authentication.component'
 
 @Component({
   selector: 'app-signin',
@@ -10,8 +10,9 @@ import { Auth } from 'aws-amplify';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private authComp: AuthenticationComponent) { }
 
+  //signin form
   form = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
@@ -21,19 +22,26 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit(){
-    Auth.signIn(this.form.value.username, this.form.value.password).then( data => {
-      if(data.con)
-      console.log("Signed in");
-      
-      this.router.navigate(['']).then( () => {
-        window.location.reload();
-      });
+    //The data entered on the form is passed for singing in
+    Auth.signIn(this.form.value.username, this.form.value.password).then( data => { 
+      //If the user signed in correctly it reloads the page
+      window.location.reload();
     })
     .catch( err => {
+      //If user confirmation is needed the confirm component is loaded
       if(err.code==="UserNotConfirmedException"){
-        this.router.navigate(['signup/confirm/']);
+        //authState changes to confirm-
+        this.authComp.authStateChange('confirm');
+        //The username is passed to the authentication component
+        this.authComp.setUser(this.form.value.username);
       }
       console.log("There was an error logging in", err);
     })
+  }
+
+  //This cuntion triggers if the user wants to sign up
+  goSignup(){
+    //Change the auth state to signup
+    this.authComp.authStateChange('signup');
   }
 }

@@ -1,34 +1,30 @@
-<div *ngIf="!code; else elseBlock">
-    <div class="content-section">
-        <form (ngSubmit)="onSubmit()" [formGroup]="form">
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4"> Sign Up </legend>
-                <br>
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" formControlName="username">
-                </div>
-                <br>
-                <div class="from-group">
-                    <label for="username">Password</label>
-                    <input type="password" class="form-control" id="password" formControlName="password">
-                </div>
-                <br>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email" formControlName="email">
-                </div>
-            </fieldset>
+<div class="content-section">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4"> Sign Up </legend>
+            <br>
             <div class="form-group">
-                <button class="btn btn-outline-info" info="submit"> Sign Up </button>
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" formControlName="username">
             </div>
-        </form>
-        <br>
-        <div class="border-top pt-3">
-            <small class="text-muted"> Already have an account? <a class="ml-2" [routerLink]="['/signin']"> SignIn
-                </a></small>
+            <br>
+            <div class="from-group">
+                <label for="username">Password</label>
+                <input type="password" class="form-control" id="password" formControlName="password">
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" formControlName="email">
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" info="submit"> Sign Up </button>
         </div>
+    </form>
+    <br>
+    <div class="border-top pt-3">
+        <small class="text-muted"> Already have an account? <a class="ml-2" style="cursor: pointer;" (click)="goSignin()"> SignIn
+            </a></small>
     </div>
 </div>
-
-<ng-template #elseBlock> <app-confirm [username]="this.form.value.username"></app-confirm> </ng-template>

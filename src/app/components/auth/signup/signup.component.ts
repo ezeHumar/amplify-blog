@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Auth } from 'aws-amplify';
+import { AuthenticationComponent } from '../../authentication/authentication.component'
 
 @Component({
   selector: 'app-signup',
@@ -10,9 +10,9 @@ import { Auth } from 'aws-amplify';
 })
 export class SignupComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private authComp: AuthenticationComponent) { }
 
-  code: boolean = false; //Variable too see if the signup or confirmation component should be shown
+  //sing up form
   form = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -20,18 +20,25 @@ export class SignupComponent implements OnInit {
   });
   
   ngOnInit(): void {
-    this.code = false;
   }
   
   onSubmit(){
+    //The data entered on the form is passed for singing up
     Auth.signUp(this.form.value.username, this.form.value.password, this.form.value.email).then( data => {
-      console.log("Signed up");
-      this.code = true;
-      // this.router.navigate(['']);
+      //The authState is changed to confirm as that is the component tath should be loaded
+      this.authComp.authStateChange('confirm');
+      //The user is set in the authorization component, so then it gets passed to the confirmation component
+      this.authComp.setUser(this.form.value.username);
     })
     .catch( err => {
       console.log("There was an error signing in");
     })
+  }
+
+  //This cuntion triggers if the user wants to sign in
+  goSignin(){
+    //Change the auth state to signin
+    this.authComp.authStateChange('signin');
   }
 
 }

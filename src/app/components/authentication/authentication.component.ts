@@ -1,6 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } from '@aws-amplify/ui-components';
-
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-authentication',
@@ -8,74 +6,25 @@ import { onAuthUIStateChange, CognitoUserInterface, AuthState, FormFieldTypes } 
   styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit {
-  @Input() authState: any;
-  
   title = 'amplify-angular-auth';
-  user: CognitoUserInterface | undefined;
+  //The actual auth state. This component receives the authState that should have at the start (singup or singin)
+  @Input() authState: any;
 
-  formFieldsSignUp: FormFieldTypes = [];
-  formFieldsSignIn: FormFieldTypes = [];
-  formFieldsForgotPass: FormFieldTypes = [];
+  constructor() { }
 
-  constructor(private ref: ChangeDetectorRef) {
-    this.formFieldsSignUp = [
-      {
-        type: "email",
-        label: "Email",
-        placeholder: "",
-        required: true,
-      },
-      {
-        type: "username",
-        label: "Username",
-        placeholder: "",
-        required: true,
-      },
-      {
-        type: "password",
-        label: "Password",
-        placeholder: "",
-        required: true,
-      }
-    ]
-
-    this.formFieldsSignIn = [
-      {
-        type: "username",
-        label: "Username",
-        placeholder: "",
-        required: true,
-      },
-      {
-        type: "password",
-        label: "Password",
-        placeholder: "",
-        required: true,
-      }
-    ]
-
-    this.formFieldsForgotPass = [
-      {
-        type: "username",
-        label: "Username",
-        placeholder: "",
-        required: true,
-      }
-    ]
-
-    
-  }
-
+  //This variable saves the username if its necesary, specialy when is has to be passed to the confirm component
+  user: string = "";
+  
   ngOnInit() {
-    
-    onAuthUIStateChange((authState, authData) => {
-      this.authState = authState;
-      this.user = authData as CognitoUserInterface;
-      this.ref.detectChanges();
-    })
   }
 
-  ngOnDestroy() {
-    return onAuthUIStateChange;
+  //For uptdating the actual authState and load the correct component
+  authStateChange(newAuthState: string){
+    this.authState = newAuthState;
+  }
+
+  //For modifying the username
+  setUser(user: string){
+    this.user = user;
   }
 }

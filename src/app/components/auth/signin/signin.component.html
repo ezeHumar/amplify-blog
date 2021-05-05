@@ -14,7 +14,7 @@
             </div>
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-info" info="submit"> Log In </button>
+            <button class="btn btn-outline-info me-1" info="submit"> Log In </button>
             <small class="text-muted mb-2">
                 <a href="">Forgot password?</a>
             </small>
@@ -22,6 +22,6 @@
     </form>
     <br>
     <div class="border-top pt-3">
-        <small class="text-muted"> Need an account? <a class="ml-2" [routerLink]="['/signup']"> SignUp </a></small>
+        <small class="text-muted"> Need an account? <a class="ml-2" style="cursor: pointer;" (click)="goSignup()"> SignUp </a></small>
     </div>
 </div>

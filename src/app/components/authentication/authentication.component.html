@@ -1,17 +1,10 @@
 <!-- https://docs.amplify.aws/ui/auth/authenticator/q/framework/angular -->
-<amplify-authenticator initialAuthState="{{ authState }}">
-    <amplify-sign-up
-      header-text="Create an account"
-      slot="sign-up"
-      submitButtonText="Sing up"
-      [formFields]="formFieldsSignUp"
-    ></amplify-sign-up>
-    <amplify-sign-in 
-        slot="sign-in" 
-        [formFields]="formFieldsSignIn"
-    ></amplify-sign-in>
-    <amplify-forgot-password
-        slot="forgot-password" 
-        [formFields]="formFieldsForgotPass"
-    ></amplify-forgot-password>
-  </amplify-authenticator>
+
+  <container-element [ngSwitch]="authState">
+
+    <app-signin *ngSwitchCase="'signin'"></app-signin>
+
+    <app-signup *ngSwitchCase="'signup'"></app-signup>
+
+    <app-confirm *ngSwitchCase="'confirm'" [username]="user"></app-confirm>
+ </container-element>
