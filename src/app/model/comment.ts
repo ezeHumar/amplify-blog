@@ -6,6 +6,7 @@ export class Comment {
     content: string;
     profileID: string;
     profile?: Profile;
+    createdAt?: string;
 
     constructor(postID: string, content: string, profileID: string, profile?: Profile){
         this.postID = postID;

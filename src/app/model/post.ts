@@ -7,7 +7,8 @@ export class Post {
     content: string;
     profileID: string;
     profile?: Profile | null;
-
+    createdAt?: string;
+    
     constructor(title: string, content: string, profileID: string){
         this.title=title;
         this.content=content;

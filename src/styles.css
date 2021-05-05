@@ -1,8 +1,6 @@
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 5rem;
-    padding-top: 30px;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -42,14 +40,12 @@ body {
     margin-bottom: 20px;
     margin-top:20px;
   }
-
-  .d-flex {
-    word-break: break-all; /* Para que el texto del post no salga del flexbox */
-  }
   
   .article-title {
     color: #444444;
     text-decoration: none;
+    white-space: pre-wrap;
+    word-break: keep-all;
   }
   
   a.article-title:hover {
@@ -58,9 +54,17 @@ body {
   }
   
   .article-content {
-    white-space: pre-line;
+    white-space: pre-wrap;
+    word-break: keep-all;
+    hyphens: auto;
   }
-  
+
+  .article-content-shortened{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .article-img {
     height: 65px;
     width: 65px;
@@ -135,39 +139,20 @@ body {
     right: 0px;
   }
 
-  .navbar-nav {
-    flex-direction: row;
-  }
-  
   .nav-link {
     padding-right: .5rem !important;
     padding-left: .5rem !important;
   }
 
-  .fifty-chars {
-    /* This class is used for the posts list, to make it so the description is limited to 50 characters */
-    width: 80ch;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 
-:root {
-  --amplify-primary-color: #5f788a;
-  --amplify-primary-tint: #5f788a;
-  --amplify-primary-shade: #5f788a;
-  }
-  amplify-authenticator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-  }
-
+  :root {
+    --amplify-primary-color: #5f788a;
+    --amplify-primary-tint: #5f788a;
+    --amplify-primary-shade: #5f788a;
+    }
 
   #upload-photo {
     opacity: 0;
     position: absolute;
     z-index: -1;
  }
- 
