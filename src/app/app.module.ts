@@ -27,6 +27,7 @@ import { WrongRouteComponent } from './components/wrong-route/wrong-route.compon
 import { FormCommentComponent } from './components/comment/form-comment/form-comment.component';
 import { ListCommentComponent } from './components/comment/list-comment/list-comment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ImageComponent } from './components/image/image.component';
 
 /* Configure Amplify resources */
 Amplify.configure(awsconfig);
@@ -49,7 +50,8 @@ Amplify.configure(awsconfig);
     ProfileComponent,
     WrongRouteComponent,
     FormCommentComponent,
-    ListCommentComponent
+    ListCommentComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,

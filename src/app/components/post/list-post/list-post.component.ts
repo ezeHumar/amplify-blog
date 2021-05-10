@@ -26,7 +26,12 @@ export class ListPostComponent implements OnInit {
         owner
         createdAt
         profile {
-          profilePictureURL
+          username
+          profilePicture{
+            bucket
+            key
+            region
+          }
         }
       }
       nextToken
@@ -36,8 +41,9 @@ export class ListPostComponent implements OnInit {
   postsList: Array<Post> = [];
   authMode : GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
 
-  async ngOnInit() {
+  isLoaded: boolean = false;
 
+  async ngOnInit() {
   
     await Auth.currentAuthenticatedUser()
     .then( () => {
@@ -49,7 +55,7 @@ export class ListPostComponent implements OnInit {
       this.authMode = GRAPHQL_AUTH_MODE.AWS_IAM;
     });
 
-    this.getPosts(this.authMode);
+    this.getPosts(this.authMode).then(() => this.isLoaded = true);
   }
 
   async getPosts(authMode: GRAPHQL_AUTH_MODE) { 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { APIService } from 'src/app/API.service';
 import { ActivatedRoute, Router } from '@angular/router'
-import { Auth } from 'aws-amplify';
+import { Auth, Storage } from 'aws-amplify';
 import { Post } from '../../../model/post'
 import { API, GRAPHQL_AUTH_MODE } from '@aws-amplify/api';
 import { Comment } from 'src/app/model/comment';
@@ -21,11 +21,15 @@ export class DetailPostComponent implements OnInit {
   usernameLogged: String = "";//Has the username of the logged user (if is there any)
   postProfile: Profile = {};//Profile of the post owner
 
+  isLoaded: boolean = false;
+
   postComments: Comment[] | undefined = [];//Comments that belong to the post
 
   constructor(private api: APIService, private route: ActivatedRoute, private router: Router) { 
-    this.id = route.snapshot.params["id"];//recover the id passed on the url
+    this.id = route.snapshot.params["id"];//retrieve the id passed on the url
   }
+
+  img: any;
 
   statement: string = `query GetPost($id: ID!) {
     getPost(id: $id) {
@@ -37,7 +41,12 @@ export class DetailPostComponent implements OnInit {
       createdAt
       profile {
         __typename
-        profilePictureURL
+        username
+        profilePicture{
+          bucket
+          key
+          region
+        }
       }
       comments {
         __typename
@@ -47,7 +56,12 @@ export class DetailPostComponent implements OnInit {
           owner
           createdAt
           profile {
-            profilePictureURL
+            username
+            profilePicture{
+              bucket
+              key
+              region
+            }
           }
         }
         nextToken
@@ -77,13 +91,17 @@ export class DetailPostComponent implements OnInit {
         this.authMode = GRAPHQL_AUTH_MODE.AWS_IAM;
       });
 
-      await this.getPost(this.authMode);
+      console.log(this.isLoaded)
+      await this.getPost(this.authMode).then (() => {console.log(this.isLoaded)});
 
       //The profile of the post owner is saved
-      this.postProfile = this.post.profile!;
+      this.postProfile = this.post.profile!;      
 
       //Recover the post's comments
       this.postComments = this.getComments(this.post);
+      
+      console.log(this.postComments);
+      this.isLoaded = true;
       
       if(this.usernameLogged === this.post.owner){
         this.isOwner = true;
@@ -109,6 +127,7 @@ export class DetailPostComponent implements OnInit {
   async getPost(authMode: GRAPHQL_AUTH_MODE) {
     console.log(this.id);
     const res = await API.graphql({ query: this.statement, variables: {id : this.id}, authMode: authMode });
+    console.log((res as any).data.getPost);
     this.post = (res as any).data.getPost; //The res variable is parsed beceuse if it's not it gives an error
   }
 
@@ -124,4 +143,15 @@ export class DetailPostComponent implements OnInit {
     });
   }
 
+  getImageSrc(key: string): string | Object{
+    let imgSrc: string | Object ="";
+    Storage.get(key, {expires: 60}).then( data => {
+      console.log(data);
+      imgSrc=data;
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+    return imgSrc;
+  }
 }

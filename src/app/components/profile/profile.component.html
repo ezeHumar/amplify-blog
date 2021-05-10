@@ -2,39 +2,42 @@
     <div class="d-flex">
 
         <label *ngIf="isOwner; else elseBlock" class="rounded-circle account-img-container" for="upload-photo">
-            <img class="rounded-circle account-img" src="{{ profile.profilePictureURL }}">
+            <app-image *ngIf="isLoaded" [classSet]="'rounded-circle account-img'" [key]="profile!.profilePicture!.key"></app-image>
             <div class="middle-img">
                 <div class="text-img">Upload</div>
             </div>
         </label>
 
         <ng-template #elseBlock>
-            <img class="rounded-circle account-img" src="{{ profile.profilePictureURL }}">
+            <app-image *ngIf="isLoaded" [classSet]="'rounded-circle account-img'" [key]="profile!.profilePicture!.key"></app-image>
         </ng-template>
 
-        <!-- Donde rounded-circle es de bootstrap y account-img es personalizada(css) -->
+        <!-- where rounded-circle is from bootstrap and account-img is in the styles.css -->
         <div>
             <h2>{{ profile.username }}</h2>
             <p class="text-secondary">{{ profile.email }}</p>
         </div>
     </div>
     <div>
-
         <input *ngIf="isOwner" type="file" id="upload-photo" (change)="onChange($event)">
     </div>
     <hr>
-    <div>
+    <div *ngIf="isLoaded">
         <h3>User posts</h3>
-        <article *ngFor="let post of userPostsList" class="content-section">
-            <div class="d-flex">
-                <div>
-                    <div class="article-metadata">
-                        <small class="text-muted">aca la fecha</small>
+        <h5 *ngIf="userPostsList.length == 0; else elseBlockPosts"> This user has no posts</h5>
+        <ng-template #elseBlockPosts>
+            <article *ngFor="let post of userPostsList" class="content-section">
+                <div class="d-flex">
+                    <div style="min-width: 0;">
+                        <div class="article-metadata">
+                            <small class="text-muted">{{ post.createdAt | date:" d/M/Y " }}</small>
+                        </div>
+                        <h2><a class="article-title" [routerLink]="['/post/detail', post.id]">{{ post.title }}</a></h2>
+                        <p class="article-content-shortened">{{ post.content }}</p>
                     </div>
-                    <h2><a class="article-title" [routerLink]="['/post/detail', post.id]">{{ post.title }}</a></h2>
-                    <p class="article-content fifty-chars">{{ post.content }}</p>
                 </div>
-            </div>
-        </article>
+            </article>
+        </ng-template>
+        
     </div>
 </div>

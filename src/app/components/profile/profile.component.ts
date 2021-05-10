@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
   isOwner: boolean = false;//Indicates if the user is the owner or the profile being visited
   usernameLogged: string = ""//Has the username of the logged user (if is there any)
 
+  isLoaded: boolean = false;
+
   statementGetProfile = `query ListProfiles($filter: ModelProfileFilterInput, $limit: Int, $nextToken: String) {
     listProfiles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       __typename
@@ -33,7 +35,9 @@ export class ProfileComponent implements OnInit {
         id
         username
         email
-        profilePictureURL
+        profilePicture{
+          key
+        }
       }
       nextToken
     }
@@ -66,7 +70,7 @@ export class ProfileComponent implements OnInit {
       });
     
     this.getPosts(this.authMode);
-    await this.getProfile(this.authMode);
+    await this.getProfile(this.authMode).then(() => this.isLoaded=true);
     if(this.profile.username === this.usernameLogged){
       this.isOwner = true;
     }
@@ -94,9 +98,15 @@ export class ProfileComponent implements OnInit {
       const file = fileList[0];
       Storage.put(this.profile.username!, file, {
         contentType: 'image/png'
-      }).then((data) => {
+      }).then( data => {
         console.log("Image uploaded correctly");
-        this.api.UpdateProfile({id: this.profile.id!, profilePictureURL: "https://" + awsExports.aws_user_files_s3_bucket + ".s3." + awsExports.aws_appsync_region + ".amazonaws.com/public/" + (data as any).key}).then( () => {
+        console.log(data);
+        let imageObject = {
+          bucket: awsExports.aws_user_files_s3_bucket,
+          region: awsExports.aws_user_files_s3_bucket_region,
+          key: (data as any).key
+        }
+        this.api.UpdateProfile({id: this.profile.id!, profilePicture: imageObject}).then( () => {
           console.log("Profile updated correctly");
           window.location.reload();
         })

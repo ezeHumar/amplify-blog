@@ -12,7 +12,14 @@ type Profile @model
                                            { allow: private, operations: [read] }])
     posts: [Post] @connection(keyName: "postProfile", fields: ["id"])
     comments: [Comment] @connection(keyName: "commentProfile", fields: ["id"])
+    profilePicture: S3Object
   }
+
+type S3Object{
+  bucket: String!
+  region: String!
+  key: String!
+}
 
 type Post @model
   @key(name: "postProfile", fields: ["profileID"])

@@ -4,6 +4,11 @@ query GetProfile($id: ID!) {
     id
     username
     email
+    profilePicture {
+      bucket
+      region
+      key
+    }
     createdAt
     updatedAt
     profilePictureURL
@@ -43,6 +48,11 @@ query ListProfiles(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -101,6 +111,11 @@ query GetPost($id: ID!) {
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -149,6 +164,11 @@ query GetComment($id: ID!) {
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL

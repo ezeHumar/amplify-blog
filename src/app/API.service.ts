@@ -14,6 +14,13 @@ export type CreateProfileInput = {
   username: string;
   email: string;
   profilePictureURL?: string | null;
+  profilePicture?: S3ObjectInput | null;
+};
+
+export type S3ObjectInput = {
+  bucket: string;
+  region: string;
+  key: string;
 };
 
 export type ModelProfileConditionInput = {
@@ -69,11 +76,19 @@ export type Profile = {
   id?: string;
   username?: string;
   email?: string;
+  profilePicture?: S3Object;
   createdAt?: string;
   updatedAt?: string;
   profilePictureURL?: string | null;
   posts?: ModelPostConnection;
   comments?: ModelCommentConnection;
+};
+
+export type S3Object = {
+  __typename: "S3Object";
+  bucket?: string;
+  region?: string;
+  key?: string;
 };
 
 export type ModelPostConnection = {
@@ -147,6 +162,7 @@ export type UpdateProfileInput = {
   username?: string | null;
   email?: string | null;
   profilePictureURL?: string | null;
+  profilePicture?: S3ObjectInput | null;
 };
 
 export type DeleteProfileInput = {
@@ -338,6 +354,12 @@ export type CreateProfileMutation = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -376,6 +398,12 @@ export type UpdateProfileMutation = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -414,6 +442,12 @@ export type DeleteProfileMutation = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -461,6 +495,12 @@ export type CreatePostMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -516,6 +556,12 @@ export type UpdatePostMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -571,6 +617,12 @@ export type DeletePostMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -626,6 +678,12 @@ export type CreateCommentMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -681,6 +739,12 @@ export type UpdateCommentMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -736,6 +800,12 @@ export type DeleteCommentMutation = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -989,6 +1059,12 @@ export type GetProfileQuery = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -1029,6 +1105,12 @@ export type ListProfilesQuery = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1090,6 +1172,12 @@ export type GetPostQuery = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1145,6 +1233,12 @@ export type GetCommentQuery = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1341,6 +1435,12 @@ export type OnCreateProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -1379,6 +1479,12 @@ export type OnUpdateProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -1417,6 +1523,12 @@ export type OnDeleteProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  profilePicture?: {
+    __typename: "S3Object";
+    bucket: string;
+    region: string;
+    key: string;
+  } | null;
   createdAt: string;
   updatedAt: string;
   profilePictureURL?: string | null;
@@ -1464,6 +1576,12 @@ export type OnCreatePostSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1519,6 +1637,12 @@ export type OnUpdatePostSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1574,6 +1698,12 @@ export type OnDeletePostSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1629,6 +1759,12 @@ export type OnCreateCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1684,6 +1820,12 @@ export type OnUpdateCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -1739,6 +1881,12 @@ export type OnDeleteCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    profilePicture?: {
+      __typename: "S3Object";
+      bucket: string;
+      region: string;
+      key: string;
+    } | null;
     createdAt: string;
     updatedAt: string;
     profilePictureURL?: string | null;
@@ -2001,6 +2149,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -2055,6 +2209,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -2109,6 +2269,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -2172,6 +2338,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2243,6 +2415,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2314,6 +2492,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2385,6 +2569,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2456,6 +2646,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2527,6 +2723,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -2889,6 +3091,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -2943,6 +3151,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3042,6 +3256,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3107,6 +3327,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3399,6 +3625,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -3445,6 +3677,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -3491,6 +3729,12 @@ export class APIService {
           id
           username
           email
+          profilePicture {
+            __typename
+            bucket
+            region
+            key
+          }
           createdAt
           updatedAt
           profilePictureURL
@@ -3546,6 +3790,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3609,6 +3859,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3672,6 +3928,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3735,6 +3997,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3798,6 +4066,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL
@@ -3861,6 +4135,12 @@ export class APIService {
             id
             username
             email
+            profilePicture {
+              __typename
+              bucket
+              region
+              key
+            }
             createdAt
             updatedAt
             profilePictureURL

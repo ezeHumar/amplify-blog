@@ -1,6 +1,6 @@
 <article class="content-section">
     <div class="d-flex">
-        <img class="rounded-circle flex-shrink-0 article-img" src="{{ postProfile.profilePictureURL }}">
+        <app-image *ngIf="isLoaded" [classSet]="'rounded-circle flex-shrink-0 article-img'" [key]="postProfile!.profilePicture!.key"></app-image>
         <div style="min-width: 0;">
             <div class="article-metadata">
                 <div>
@@ -22,7 +22,7 @@
 
 <h5 class="mb-3">Comments</h5>
 
-<app-list-comment [comments]="postComments" ></app-list-comment>
+<app-list-comment *ngIf="isLoaded === true" [comments]="postComments" ></app-list-comment>
 
 <div *ngIf="usernameLogged">
     <app-form-comment [usernameLogged]="this.usernameLogged" [postID]="post.id"></app-form-comment>

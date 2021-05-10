@@ -7,6 +7,11 @@ mutation CreateProfile(
     id
     username
     email
+    profilePicture {
+      bucket
+      region
+      key
+    }
     createdAt
     updatedAt
     profilePictureURL
@@ -44,6 +49,11 @@ mutation UpdateProfile(
     id
     username
     email
+    profilePicture {
+      bucket
+      region
+      key
+    }
     createdAt
     updatedAt
     profilePictureURL
@@ -81,6 +91,11 @@ mutation DeleteProfile(
     id
     username
     email
+    profilePicture {
+      bucket
+      region
+      key
+    }
     createdAt
     updatedAt
     profilePictureURL
@@ -126,6 +141,11 @@ mutation CreatePost(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -177,6 +197,11 @@ mutation UpdatePost(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -228,6 +253,11 @@ mutation DeletePost(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -279,6 +309,11 @@ mutation CreateComment(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -330,6 +365,11 @@ mutation UpdateComment(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
@@ -381,6 +421,11 @@ mutation DeleteComment(
       id
       username
       email
+      profilePicture {
+        bucket
+        region
+        key
+      }
       createdAt
       updatedAt
       profilePictureURL
