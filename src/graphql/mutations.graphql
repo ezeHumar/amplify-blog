@@ -7,14 +7,13 @@ mutation CreateProfile(
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -49,14 +48,13 @@ mutation UpdateProfile(
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -91,14 +89,13 @@ mutation DeleteProfile(
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -141,14 +138,13 @@ mutation CreatePost(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -197,14 +193,13 @@ mutation UpdatePost(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -253,14 +248,13 @@ mutation DeletePost(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -309,14 +303,13 @@ mutation CreateComment(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -338,7 +331,6 @@ mutation CreateComment(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -365,14 +357,13 @@ mutation UpdateComment(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -394,7 +385,6 @@ mutation UpdateComment(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -421,14 +411,13 @@ mutation DeleteComment(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -450,7 +439,6 @@ mutation DeleteComment(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -551,7 +539,6 @@ mutation CreateTagPost(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -596,7 +583,6 @@ mutation UpdateTagPost(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -641,7 +627,6 @@ mutation DeleteTagPost(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken

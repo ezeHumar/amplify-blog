@@ -21,6 +21,7 @@ export class DetailPostComponent implements OnInit {
   usernameLogged: String = "";//Has the username of the logged user (if is there any)
   postProfile: Profile = {};//Profile of the post owner
 
+  //Determines if the posts have been loaded (true) or not (false)
   isLoaded: boolean = false;
 
   postComments: Comment[] | undefined = [];//Comments that belong to the post
@@ -91,7 +92,6 @@ export class DetailPostComponent implements OnInit {
         this.authMode = GRAPHQL_AUTH_MODE.AWS_IAM;
       });
 
-      console.log(this.isLoaded)
       await this.getPost(this.authMode).then (() => {console.log(this.isLoaded)});
 
       //The profile of the post owner is saved
@@ -100,7 +100,7 @@ export class DetailPostComponent implements OnInit {
       //Recover the post's comments
       this.postComments = this.getComments(this.post);
       
-      console.log(this.postComments);
+      //Indicate that the posts have been loaded
       this.isLoaded = true;
       
       if(this.usernameLogged === this.post.owner){
@@ -116,6 +116,7 @@ export class DetailPostComponent implements OnInit {
   //This function adds a comment received to the comments array
   addCommentCreated(newComment: Comment){
     try {
+      console.log(newComment);
       this.postComments!.push(newComment);
     } catch (error) {
       console.log("The comment has to exist");

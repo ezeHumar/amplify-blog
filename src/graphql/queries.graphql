@@ -4,14 +4,13 @@ query GetProfile($id: ID!) {
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -48,14 +47,13 @@ query ListProfiles(
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -86,7 +84,6 @@ query ListPosts(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -111,14 +108,13 @@ query GetPost($id: ID!) {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -164,14 +160,13 @@ query GetComment($id: ID!) {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -193,7 +188,6 @@ query GetComment($id: ID!) {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -224,7 +218,6 @@ query ListComments(
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       post {
         id
@@ -293,7 +286,6 @@ query GetTagPost($id: ID!) {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken

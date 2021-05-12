@@ -17,6 +17,9 @@ export class FormCommentComponent implements OnInit {
   //Profile of the user logged in
   profile: Profile = {};
 
+  //Determines if the profile has been loaded (true) or not (false)
+  isLoaded: boolean = false;
+
   //the nec comment form
   form = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -29,6 +32,8 @@ export class FormCommentComponent implements OnInit {
     if(this.usernameLogged != null){
       this.api.ListProfiles({ username: { eq: this.usernameLogged } }).then( data => {
         this.profile = data.items![0]!;
+        //Indicate that the profile has been loaded
+        this.isLoaded = true;
       });
     }
   }

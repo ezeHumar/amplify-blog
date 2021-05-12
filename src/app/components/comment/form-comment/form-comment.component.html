@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-9">
             <div class="d-flex">
-                <img class="rounded-circle flex-shrink-0 article-img" src="{{ profile.profilePictureURL }}">
+                <app-image *ngIf="isLoaded" [classSet]="'rounded-circle flex-shrink-0 article-img'" [key]="profile!.profilePicture!.key"></app-image>
                 <div class="flex-fill">
                     <form (ngSubmit)="onSubmit()" [formGroup]="form">
                         <fieldset>

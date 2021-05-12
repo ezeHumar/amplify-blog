@@ -38,9 +38,12 @@ export class ListPostComponent implements OnInit {
     }
   }`;
 
+  //The posts that are going to be shown in the template
   postsList: Array<Post> = [];
-  authMode : GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;//Determines which auth provider should be used
+  //Determines which auth provider should be used
+  authMode : GRAPHQL_AUTH_MODE = GRAPHQL_AUTH_MODE.AWS_IAM;
 
+  //Indicates if the post have been loaded (true) or not (false)
   isLoaded: boolean = false;
 
   async ngOnInit() {
@@ -55,7 +58,8 @@ export class ListPostComponent implements OnInit {
       this.authMode = GRAPHQL_AUTH_MODE.AWS_IAM;
     });
 
-    this.getPosts(this.authMode).then(() => this.isLoaded = true);
+    //Retrieve the posts and indicate that the posts have been loaded
+    this.getPosts(this.authMode).then(() => this.isLoaded = true );
   }
 
   async getPosts(authMode: GRAPHQL_AUTH_MODE) { 

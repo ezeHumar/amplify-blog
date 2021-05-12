@@ -4,14 +4,13 @@ subscription OnCreateProfile {
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -43,14 +42,13 @@ subscription OnUpdateProfile {
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -82,14 +80,13 @@ subscription OnDeleteProfile {
     id
     username
     email
+    createdAt
+    updatedAt
     profilePicture {
       bucket
       region
       key
     }
-    createdAt
-    updatedAt
-    profilePictureURL
     posts {
       items {
         id
@@ -129,14 +126,13 @@ subscription OnCreatePost {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -182,14 +178,13 @@ subscription OnUpdatePost {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -235,14 +230,13 @@ subscription OnDeletePost {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -288,14 +282,13 @@ subscription OnCreateComment {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -317,7 +310,6 @@ subscription OnCreateComment {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -341,14 +333,13 @@ subscription OnUpdateComment {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -370,7 +361,6 @@ subscription OnUpdateComment {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -394,14 +384,13 @@ subscription OnDeleteComment {
       id
       username
       email
+      createdAt
+      updatedAt
       profilePicture {
         bucket
         region
         key
       }
-      createdAt
-      updatedAt
-      profilePictureURL
       posts {
         nextToken
       }
@@ -423,7 +412,6 @@ subscription OnDeleteComment {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -512,7 +500,6 @@ subscription OnCreateTagPost {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -554,7 +541,6 @@ subscription OnUpdateTagPost {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken
@@ -596,7 +582,6 @@ subscription OnDeleteTagPost {
         email
         createdAt
         updatedAt
-        profilePictureURL
       }
       comments {
         nextToken

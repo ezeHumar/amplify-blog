@@ -13,7 +13,6 @@ export type CreateProfileInput = {
   id?: string | null;
   username: string;
   email: string;
-  profilePictureURL?: string | null;
   profilePicture?: S3ObjectInput | null;
 };
 
@@ -26,7 +25,6 @@ export type S3ObjectInput = {
 export type ModelProfileConditionInput = {
   username?: ModelStringInput | null;
   email?: ModelStringInput | null;
-  profilePictureURL?: ModelStringInput | null;
   and?: Array<ModelProfileConditionInput | null> | null;
   or?: Array<ModelProfileConditionInput | null> | null;
   not?: ModelProfileConditionInput | null;
@@ -76,10 +74,9 @@ export type Profile = {
   id?: string;
   username?: string;
   email?: string;
-  profilePicture?: S3Object;
   createdAt?: string;
   updatedAt?: string;
-  profilePictureURL?: string | null;
+  profilePicture?: S3Object;
   posts?: ModelPostConnection;
   comments?: ModelCommentConnection;
 };
@@ -161,7 +158,6 @@ export type UpdateProfileInput = {
   id: string;
   username?: string | null;
   email?: string | null;
-  profilePictureURL?: string | null;
   profilePicture?: S3ObjectInput | null;
 };
 
@@ -292,7 +288,6 @@ export type ModelProfileFilterInput = {
   id?: ModelIDInput | null;
   username?: ModelStringInput | null;
   email?: ModelStringInput | null;
-  profilePictureURL?: ModelStringInput | null;
   and?: Array<ModelProfileFilterInput | null> | null;
   or?: Array<ModelProfileFilterInput | null> | null;
   not?: ModelProfileFilterInput | null;
@@ -354,15 +349,14 @@ export type CreateProfileMutation = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -398,15 +392,14 @@ export type UpdateProfileMutation = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -442,15 +435,14 @@ export type DeleteProfileMutation = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -495,15 +487,14 @@ export type CreatePostMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -556,15 +547,14 @@ export type UpdatePostMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -617,15 +607,14 @@ export type DeletePostMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -678,15 +667,14 @@ export type CreateCommentMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -712,7 +700,6 @@ export type CreateCommentMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -739,15 +726,14 @@ export type UpdateCommentMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -773,7 +759,6 @@ export type UpdateCommentMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -800,15 +785,14 @@ export type DeleteCommentMutation = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -834,7 +818,6 @@ export type DeleteCommentMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -933,7 +916,6 @@ export type CreateTagPostMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -981,7 +963,6 @@ export type UpdateTagPostMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1029,7 +1010,6 @@ export type DeleteTagPostMutation = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1059,15 +1039,14 @@ export type GetProfileQuery = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -1105,15 +1084,14 @@ export type ListProfilesQuery = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1144,7 +1122,6 @@ export type ListPostsQuery = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1172,15 +1149,14 @@ export type GetPostQuery = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1233,15 +1209,14 @@ export type GetCommentQuery = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1267,7 +1242,6 @@ export type GetCommentQuery = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1298,7 +1272,6 @@ export type ListCommentsQuery = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     post?: {
       __typename: "Post";
@@ -1374,7 +1347,6 @@ export type GetTagPostQuery = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1435,15 +1407,14 @@ export type OnCreateProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -1479,15 +1450,14 @@ export type OnUpdateProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -1523,15 +1493,14 @@ export type OnDeleteProfileSubscription = {
   id: string;
   username: string;
   email: string;
+  createdAt: string;
+  updatedAt: string;
   profilePicture?: {
     __typename: "S3Object";
     bucket: string;
     region: string;
     key: string;
   } | null;
-  createdAt: string;
-  updatedAt: string;
-  profilePictureURL?: string | null;
   posts?: {
     __typename: "ModelPostConnection";
     items?: Array<{
@@ -1576,15 +1545,14 @@ export type OnCreatePostSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1637,15 +1605,14 @@ export type OnUpdatePostSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1698,15 +1665,14 @@ export type OnDeletePostSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1759,15 +1725,14 @@ export type OnCreateCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1793,7 +1758,6 @@ export type OnCreateCommentSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1820,15 +1784,14 @@ export type OnUpdateCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1854,7 +1817,6 @@ export type OnUpdateCommentSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -1881,15 +1843,14 @@ export type OnDeleteCommentSubscription = {
     id: string;
     username: string;
     email: string;
+    createdAt: string;
+    updatedAt: string;
     profilePicture?: {
       __typename: "S3Object";
       bucket: string;
       region: string;
       key: string;
     } | null;
-    createdAt: string;
-    updatedAt: string;
-    profilePictureURL?: string | null;
     posts?: {
       __typename: "ModelPostConnection";
       nextToken?: string | null;
@@ -1915,7 +1876,6 @@ export type OnDeleteCommentSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -2014,7 +1974,6 @@ export type OnCreateTagPostSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -2062,7 +2021,6 @@ export type OnUpdateTagPostSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -2110,7 +2068,6 @@ export type OnDeleteTagPostSubscription = {
       email: string;
       createdAt: string;
       updatedAt: string;
-      profilePictureURL?: string | null;
     } | null;
     comments?: {
       __typename: "ModelCommentConnection";
@@ -2149,15 +2106,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -2209,15 +2165,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -2269,15 +2224,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -2338,15 +2292,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2415,15 +2368,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2492,15 +2444,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2569,15 +2520,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2603,7 +2553,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -2646,15 +2595,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2680,7 +2628,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -2723,15 +2670,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -2757,7 +2703,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -2920,7 +2865,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -2984,7 +2928,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -3048,7 +2991,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -3091,15 +3033,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -3151,15 +3092,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3211,7 +3151,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -3256,15 +3195,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3327,15 +3265,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3361,7 +3298,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -3406,7 +3342,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             post {
               __typename
@@ -3530,7 +3465,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -3625,15 +3559,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -3677,15 +3610,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -3729,15 +3661,14 @@ export class APIService {
           id
           username
           email
+          createdAt
+          updatedAt
           profilePicture {
             __typename
             bucket
             region
             key
           }
-          createdAt
-          updatedAt
-          profilePictureURL
           posts {
             __typename
             items {
@@ -3790,15 +3721,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3859,15 +3789,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3928,15 +3857,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -3997,15 +3925,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -4031,7 +3958,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -4066,15 +3992,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -4100,7 +4025,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -4135,15 +4059,14 @@ export class APIService {
             id
             username
             email
+            createdAt
+            updatedAt
             profilePicture {
               __typename
               bucket
               region
               key
             }
-            createdAt
-            updatedAt
-            profilePictureURL
             posts {
               __typename
               nextToken
@@ -4169,7 +4092,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -4300,7 +4222,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -4356,7 +4277,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
@@ -4412,7 +4332,6 @@ export class APIService {
               email
               createdAt
               updatedAt
-              profilePictureURL
             }
             comments {
               __typename
